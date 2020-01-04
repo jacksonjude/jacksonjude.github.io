@@ -1,9 +1,164 @@
+<!DOCTYPE html>
+
 <html>
-  <b>👌</b>
+  <div class="background"></div>
   <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="/jquery-3.2.1.min.js"></script>
+
+    <style>
+    div.dog {
+      width: 62.5px;
+      height: 50px;
+      position: relative;
+      animation: offScreen 10s infinite;
+      animation-timing-function: linear;
+    }
+
+    @keyframes offScreen {
+      from {left: 130%}
+      to {left: -30%}
+    }
+    </style>
   </head>
-  <body>
-    <div class='bigcenter'><b>J</b></div>
+  <div class="nooverflow" id="searchnooverflow" style="float:right;">
+  <div class="searchcontainer" id="searchcontainer">
+    <img src="/assets/searchicon.png", id="searchicon", style="width:20px; height:20px; float:right;"></>
+    <form action="/search" id="searchbox">
+      <input type="text" name="search" id="searchtextbox">
+    </form>
+  </div>
+  </div>
+  <body style="">
+    <div class="homepagelinks" id="homepagelinks">
+      <img src="/assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
+      <h1>JJCooley</h1>
+      <h4>Photographer, Programmer, <br> and Keyboardist</h4>
+      <a href="photos">Photos</a>
+      <br>
+      <a href="music">Music</a>
+      <br>
+      <a href="coding">Stuff</a>
+      <br>
+      <a href="lowellschedule">Lowell Stuff</a>
+      <br>
+      <br>
+      <a href="public">Public Docs</a>
+    </div>
+
+    <div class="dog">
+      <a href="http://undertale.com" target="_blank" style="box-shadow:initial">
+        <img src="/assets/annoyingLeft.gif" style="width:62.5px;height:50px;" />
+      </a>
+    </div>
+
+    <div class="wingdings" id="wingdings">
+      <font size="1px"><a href="http://grompe.org.ru/static/wingdings_gaster.html" style="text-decoration: none">🕈✋☠☝👎✋☠☝💧</a></font>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="boxcontainer" id="socialcontainer" style="width:150px">
+      <div class="box" style="height:200px;padding-left:0px;padding-right:0px">
+        <h4><center>Profiles</center></h4>
+        <a href="https://youtube.com/c/JJCMC" target="_blank" style="text-decoration: none;"><img src="/assets/youtube80.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <a href="https://github.com/jacksonjude" target="_blank" style="text-decoration: none;"><img src="/assets/github120-light.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <br>
+        <br>
+        <br>
+        <a href="https://instagram.com/jj.cooley" target="_blank" style="text-decoration: none;"><img src="/assets/instagram80.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <a href="https://itunes.apple.com/profile/jjcooley" target="_blank" style="text-decoration: none;"><img src="/assets/appleMusic80.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+      </div>
+    </div>
+
+    <div class="boxcontainer" id="linkcontainer" style="width:150px">
+      <div class="box">
+        <h4><center>Quick Links</center></h4>
+        <font size="2px"><center><a href="/coding/html/uploaded/websiteindex.php" style="text-decoration: none;">Website Index</a></center></font>
+        <font size="2px"><center><a href="/hex" style="text-decoration: none;">Hex Converter</a></center></font>
+        <font size="2px"><center><a href="/clicker" style="text-decoration: none;">Clicker</a></center></font>
+        <br>
+      </div>
+    </div>
+
+    <script>
+      var isSmall = false
+      var mobile = false
+
+      $('#searchnooverflow').css({"width":$("#searchbox").width()+45+"px"})
+
+      var inTextBox = false
+      $('#searchtextbox').mouseout(function () {
+        inTextBox = false
+        $('#searchtextbox').blur();
+      })
+
+      $('#searchtextbox').mouseenter(function () {
+        inTextBox = true
+        setTimeout(function() {
+          if (inTextBox == true)
+          {
+            $('#searchtextbox').focus()
+            $('#searchtextbox').select()
+          }
+        }, 750);
+      })
+
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+        reformatForSmallerScreen()
+        mobile = true
+        $('.boxcontainer').css({"margin":"0 auto"})
+      }
+
+      checkForSmallScreen(false)
+
+      window.addEventListener('resize', function () {
+        checkForSmallScreen(true)
+      })
+
+      function checkForSmallScreen(withEvent)
+      {
+        if ($(window).width() < 539 && !mobile)
+        {
+          reformatForSmallerScreen()
+        }
+        else if (withEvent && isSmall && !mobile) {
+          reformatForNormalScreen()
+        }
+      }
+
+      function reformatForSmallerScreen()
+      {
+        $( ".dog" ).appendTo( $( ".homepagelinks" ) )
+
+        $( ".boxcontainer" ).appendTo( $( ".homepagelinks" ) )
+        $( ".boxcontainer" ).css({"display":"block", "padding-left":"0px", "padding-top":"20px", "padding-bottom":"20px"})
+
+        document.getElementById('wingdings').style = "position: static;"
+        $( ".wingdings" ).appendTo( $( ".homepagelinks" ) )
+
+        isSmall = true
+      }
+
+      function reformatForNormalScreen()
+      {
+        $( ".dog" ).appendTo( $( "body" ) )
+
+        $( ".boxcontainer" ).css({"float":"left", "padding-left":"20px", "padding-top":"0px", "padding-bottom":"0px"})
+        $( ".boxcontainer" ).appendTo( $( "body" ) )
+
+        document.getElementById('wingdings').style = "position: absolute; bottom: 0;"
+        $( ".wingdings" ).appendTo( $( "body" ) )
+
+        isSmall = false
+      }
+    </script>
   </body>
 </html>

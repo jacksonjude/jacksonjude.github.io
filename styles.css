@@ -1,0 +1,215 @@
+@font-face {
+    font-family: '8bitoperator';
+    src: url("assets/8bitoperator.ttf");
+}
+
+.blur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: block;
+
+  background: url(space.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.background-blur
+{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+
+  position: absolute;
+  display: none;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(255,255,255,.100);
+  z-index: 0;
+  width:100;
+  height:100;
+}
+
+.background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
+
+  display: block;
+
+  background: url(assets/space.png);
+  background-size: cover;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+
+  min-width: 100%;
+  min-height: 100%;
+}
+
+html {
+  /*background: url(assets/space.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #444444;*/
+
+  background-color: #444444;
+}
+
+h1, h2, h3, h4, a:link, a:visited, a:active, p, label {
+  color: WHITE;
+  font-family: '8bitoperator';
+  color: #D3D3D3;
+}
+
+input[type=submit] {
+  background-color: #fefefe;
+  font-family: '8bitoperator';
+}
+
+button {
+  background-color: #fefefe;
+  font-family: '8bitoperator';
+}
+
+a {
+    color: #067;
+    text-decoration: none;
+}
+
+a:hover {
+  color: #F3F3F3;
+}
+
+a {
+    position: relative;
+    display: inline;
+    box-shadow: inset 0 -.125rem 0 0 rgba(150,150,150,.5);
+    transition: color .25s,box-shadow .35s cubic-bezier(.55,.085,0,.99);
+}
+
+a:active, a:focus, a:hover {
+    box-shadow: inset 0 -2rem 0 0 rgba(150,150,150,.5)
+}
+
+.clickerButtons
+{
+  float:left;
+  display:inline;
+  margin-left: 50px;
+}
+
+.clickerButton
+{
+  height:40px;
+  width:300px;
+}
+
+button:disabled
+{
+  background: #dddddd;
+}
+
+table {
+    font-family: '8bitoperator';
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+  background-color: #D3D3D3;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.homepagelinks {
+  float: left;
+  margin-top: 50px;
+}
+
+.boxcontainer {
+  /*float: left;*/
+  display: inline-block;
+  padding-left: 20px;
+  vertical-align: top;
+}
+
+.box {
+  border:1px solid white;
+  max-width: 200px;
+  background-color: rgba(68,68,68,0.5);
+  padding-left:10px;
+  padding-right:10px;
+  border-radius: 5px;
+}
+
+
+.wingdings {
+  position: fixed;
+  bottom: 0;
+}
+
+#searchbox {
+  position: absolute;
+  float:right;
+  width: 140px;
+  right: -200px;
+  transition: 1s;
+  margin-right: 10px;
+}
+
+#searchicon {
+  position: relative;
+  float:right;
+  right: 0px;
+  transition: 1s;
+  margin-right: 5px;
+}
+
+.searchcontainer {
+  float: right;
+  height: 40px;
+}
+
+.searchcontainer:hover #searchbox {
+  transition: 1s;
+  right: 0;
+}
+
+.searchcontainer:hover #searchicon {
+  transition: 1s;
+  right: 150px;
+}
+
+.nooverflow {
+  overflow: hidden;
+  position: relative;
+}

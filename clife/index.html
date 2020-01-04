@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley - Conway Game</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  </head>
+  <body>
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h4 style="margin-bottom:2px">(Enter) to start / stop</h4>
+    <div id="gridcontainer" style="float:left;background:#BBB">
+    </div>
+    <div style="float:left;padding-left:15px">
+      <h4>Sample Grids:
+      <br>
+      <input id="loadPoint" type="text"> Loding Point
+      <br>
+      <br>
+      <button id="flower" onclick="spawnGrid(event)">Flower</button>
+      <br>
+      <button id="collider" onclick="spawnGrid(event)">Collider</button>
+      </h4>
+    </div>
+    <div style="clear:both;">
+    </div>
+  </body>
+
+  <script>
+  var gridsize = 75
+  var gridelementsize = 6
+  var margin = 1
+  var roundness = 1
+
+  var gridstates = []
+  var tmpGridstates = []
+
+  var gameRunning = false
+  var onTick = false
+
+  $(function () {
+    $(document).keydown(function(e) {
+      switch (e.which) {
+        case 13: // enter
+          gameRunning = !gameRunning
+          break
+        default: return // exit this handler for other keys
+      }
+    })
+
+    setupGrid("clife", 0)
+
+    var gameLoop = function ()
+    {
+      if (gameRunning && !onTick)
+      {
+        onTick = true
+        for (tile in gridstates)
+        {
+          var neighbours = getCellNeighbourCount(tile)
+
+          if (gridstates[tile] == 1) //If live cell
+          {
+            if (neighbours == 2 || neighbours == 3) //And correct number of neighbours
+            {
+              tmpGridstates.push(1) //Keep live cell
+            }
+            else
+            {
+              tmpGridstates.push(0) //Let cell die
+            }
+          }
+
+          if (gridstates[tile] == 0) //If dead cell
+          {
+            if (neighbours == 3) //And correct number of neighbours
+            {
+              tmpGridstates.push(1) //Make a live cell
+            }
+            else
+            {
+              tmpGridstates.push(0) //Remain a dead cell
+            }
+          }
+        }
+
+        gridstates = tmpGridstates.concat()
+        tmpGridstates = []
+
+        for (tile in gridstates)
+        {
+          setColor($("#clife").find("#" + tile))
+        }
+
+        onTick = false
+      }
+
+      setTimeout(gameLoop, 100)
+    }
+
+    setTimeout(gameLoop, 100)
+  })
+
+  function getCellNeighbourCount(gridNumber)
+  {
+    var gridNumberX = convertToXY(gridNumber)[0]
+    var gridNumberY = convertToXY(gridNumber)[1]
+
+    var up = convertToGridNumber(gridNumberX, gridNumberY - 1)
+    var down = convertToGridNumber(gridNumberX, gridNumberY + 1)
+    var left = convertToGridNumber(gridNumberX - 1, gridNumberY)
+    var right = convertToGridNumber(gridNumberX + 1, gridNumberY)
+
+    var upleft = convertToGridNumber(gridNumberX - 1, gridNumberY - 1)
+    var upright = convertToGridNumber(gridNumberX + 1, gridNumberY - 1)
+    var downleft = convertToGridNumber(gridNumberX - 1, gridNumberY + 1)
+    var downright = convertToGridNumber(gridNumberX + 1, gridNumberY + 1)
+
+    var total = (gridstates[up] || 0) + (gridstates[down] || 0) + (gridstates[left] || 0) + (gridstates[right] || 0) + (gridstates[upleft] || 0) + (gridstates[upright] || 0) + (gridstates[downleft] || 0) + (gridstates[downright] || 0)
+    return total
+  }
+
+  function setColor(obj)
+  {
+    state = gridstates[parseInt($( obj ).attr('id'))]
+
+    switch (state)
+    {
+      case 0:
+      obj.css("background", "#eee")
+      break
+      case 1:
+      obj.css("background", "#777")
+      break
+      default:
+      obj.css("background", "#eee")
+      break
+    }
+  }
+
+  function setupGrid(id, defaultState)
+  {
+    $("#gridcontainer").append($("<div>", {"id": id, "class": "grid"}))
+
+    $("#" + id).css("border-radius", (100).toString() + "px")
+
+    //Set grid container size
+    $("#" + id).css("width", ((gridsize * gridelementsize) + (margin*gridsize*2)).toString() + "px")
+    $("#" + id).css("height", ((gridsize * gridelementsize) + (margin*gridsize*2)).toString() + "px")
+
+    //Adding grid-elements
+    for (i=0; i < Math.pow(gridsize, 2); i++)
+    {
+      $("#" + id).append($("<div>", {"id": i.toString(), "class": "grid-element"}))
+      gridstates.push(defaultState)
+    }
+
+    //CSS setup
+    $("#" + id).find(".grid-element").css("width", gridelementsize)
+    $("#" + id).find(".grid-element").css("height", gridelementsize)
+    $("#" + id).find(".grid-element").css("float", "left")
+    $("#" + id).find(".grid-element").css("margin", margin.toString() + "px")
+    $("#" + id).find(".grid-element").css("border-radius", roundness.toString() + "px")
+    $("#" + id).find(".grid-element").css("transition", "background-color 0.1s ease")
+    $("#" + id).find(".grid-element").css("vertical-align", "middle")
+    setColor($("#" + id).find(".grid-element"))
+
+    $("#" + id).find(".grid-element").mousedown(function () {
+
+      if (gridstates[parseInt($( this ).attr('id'))] == 0)
+      {
+        gridstates[parseInt($( this ).attr('id'))] = 1
+      }
+      else if (gridstates[parseInt($( this ).attr('id'))] == 1)
+      {
+        gridstates[parseInt($( this ).attr('id'))] = 0
+      }
+
+      setColor($( this ))
+    })
+  }
+
+  function convertToXY(gridNumber)
+  {
+    var xPos = gridNumber % gridsize
+    var yPos = Math.floor(gridNumber / gridsize)
+
+    return [xPos, yPos]
+  }
+
+  function convertToGridNumber(xPos, yPos)
+  {
+    var gridNumber = ((yPos * gridsize) + xPos)
+
+    return gridNumber
+  }
+
+  function loadData(data, pointToLoadAt)
+  {
+    var pointX = convertToXY(pointToLoadAt)[0]
+    var pointY = convertToXY(pointToLoadAt)[1]
+
+    var rows = data.split(";")
+    for (row in rows)
+    {
+      var columns = rows[row].split("")
+
+      for (column in columns)
+      {
+        var tileToSetX = parseInt(pointX) + parseInt(column)
+        var tileToSetY = parseInt(pointY) + parseInt(row)
+
+        var tileToSet = convertToGridNumber(tileToSetX, tileToSetY)
+        gridstates[tileToSet] = parseInt(columns[column])
+
+        setColor($("#clife").find("#" + tileToSet))
+      }
+    }
+  }
+
+  var sampleGrids = {"flower":"000000000000000111;0;00000000000001001001;00000000000001011101;00000000000001001001;0;000000000000000111;0;0;00000000000001100011;00000000000001010101;0000000000000011011;0;0011100001100000000000110000111;000000000101000000000101;100100100011000010000110001001001;101110100000000101000000001011101;100100100011000010000110001001001;000000000101000000000101;0011100001100000000000110000111;0;0000000000000011011;00000000000001010101;00000000000001100011;0;0;000000000000000111;0;00000000000001001001;00000000000001011101;00000000000001001001;0;000000000000000111;", "collider":"0;0000000000000000000000000001;000000000000000000000000000101;0000000000100000000000000000101000011;0000000000110000000000000000100100011;0110011000011000000000000000101;011001100001110000000000000101;0000011000011000000010100001;00000000001100000000011;0000000000100000000001"}
+
+  function spawnGrid(e)
+  {
+    var sender = e.srcElement || e.target
+    var gridToSpawn = sampleGrids[sender.id]
+
+    var pointToLoad = document.getElementById("loadPoint").value
+
+    loadData(gridToSpawn, (parseInt(pointToLoad) || 0))
+  }
+  </script>
+</html>

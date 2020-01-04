@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley - Caesar Cipher</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  </head>
+  <body>
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h1>Caesar Cipher</h1>
+    <h4 id="inputFields">
+    <input type="text" id="input" oninput="convertTextFieldMessage()" autocomplete="off"> Input</input>
+    <br>
+    <input type="text" id="key" oninput="convertTextFieldMessage()" autocomplete="off"> Key</input>
+    <br>
+    <select id="alphabet" oninput="convertTextFieldMessage()">
+      <option value="uppercase">Upper Case</option>
+      <option value="alphabet">Alphabet</option>
+      <option value="ascii">ASCII</option>
+    </select> Alphabet
+    <br>
+    <select id="multiplier" oninput="convertTextFieldMessage()">
+      <option value="1">1 (Encrypt)</option>
+      <option value="0">0 (None)</option>
+      <option value="-1">-1 (Decrypt)</option>
+      <option value="custom">Custom</option>
+    </select> Multiplier
+    </h4>
+    <h4>
+    <input type="text" id="output"> Output</input>
+    </h4>
+    <br>
+    <br>
+    <br>
+    <a href="..">Back</a>
+  </body>
+
+  <?php
+  $rand = rand(0, 1);
+  if ($rand == 0):
+  ?>
+  <div class="wingdings" id="wingdings">
+    <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">✋🕆☺🕈💣✌👍 ☝☜💧💣👌 ☟✌💧💧✡ ☼❄ 🕆🏱👍 ☪✈👌✠ 💣👍 🕈☹☞✞🕆 ☹✋✋☺⚐ ❄💧👌💧☹☝ ☹🏱☟☹</a></font>
+  </div>
+  <?php
+  else:
+  ?>
+  <div class="wingdings" id="wingdings">
+    <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">🕈✋☠☝👎✋☠☝💧 ☠🕆💣👌☜☼ ✋💧 ❄☟☜ 😐☜✡</a></font>
+  </div>
+  <?php
+  endif;
+  ?>
+</html>
+
+<script>
+//Possibly useful ascii character 1E (30), a separator character which cannot be typed
+var RSascii = ""
+
+//Alphabet vs Typeable ascii characters
+var alphabets = {"uppercase":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","alphabet":"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","ascii":" !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}"}
+
+var usingCustomMultiplier = false
+
+function setupCustomMultiplier()
+{
+  var multiplier = document.getElementById("multiplier").value
+
+  //If the multiplier is set to custom, and it's currently not in use
+  if (multiplier == "custom" && !usingCustomMultiplier)
+  {
+    //Add custom multiplier
+
+    usingCustomMultiplier = true
+
+    var customMultiplierDiv = document.createElement("div")
+    customMultiplierDiv.id = "customMultiplierDiv"
+
+    var customMultiplier = document.createElement("input")
+    customMultiplier.type = "text"
+    customMultiplier.id = "customMultiplierText"
+    customMultiplier.oninput = function() {convertTextFieldMessage()}
+    customMultiplierDiv.appendChild(customMultiplier)
+
+    var textDiv = document.createElement("span")
+    textDiv.innerHTML = " Custom"
+    customMultiplierDiv.appendChild(textDiv)
+
+    document.getElementById("inputFields").appendChild(customMultiplierDiv)
+  }
+
+  //If the multiplier is not set to custom, but it is in use
+  if (multiplier != "custom" && usingCustomMultiplier)
+  {
+    //Remove custom multiplier
+
+    usingCustomMultiplier = false
+
+    var customMultiplier = document.getElementById("customMultiplierDiv")
+    document.getElementById("inputFields").removeChild(customMultiplier)
+  }
+}
+
+function convertTextFieldMessage()
+{
+  setupCustomMultiplier()
+
+  var alphabet = document.getElementById("alphabet").value
+  if (alphabet == "uppercase")
+  {
+    document.getElementById("input").value = document.getElementById("input").value.toUpperCase()
+  }
+
+  //Get the input, key, and multiplier
+  var input = document.getElementById("input").value
+  var key = document.getElementById("key").value
+  var multiplier = document.getElementById("multiplier").value
+
+  if (multiplier == "custom")
+  {
+    multiplier = document.getElementById("customMultiplierText").value
+  }
+
+  //If input, key, and multiplier are valid, convert the message
+  if (input.split("").length > 0 && key.split("").length > 0 && !isNaN(key))
+  {
+    var convertedMessage = convertMessage(input, key, parseInt(multiplier) || 0, alphabets[alphabet])
+    document.getElementById("output").value = convertedMessage
+  }
+
+  //Set the output to nothing if nothing is entered
+  if (input.split("").length == 0 || key.split("").length == 0)
+  {
+    document.getElementById("output").value = ""
+  }
+}
+
+function convertMessage(input, key, multiplier, alphabet)
+{
+  var splitAlphabet = alphabet.split("")
+
+  var output = ""
+  var splitInput = input.split("")
+  var splitKey = key.split("")
+
+  for (inputLetter in splitInput)
+  {
+    //Get the key index
+    var keyIndex = parseInt(inputLetter)
+
+    //If the key index is greater than the key size, keep subtracting until the key index is in range
+    while (keyIndex > splitKey.length - 1)
+    {
+      keyIndex -= splitKey.length
+    }
+
+    //
+    var lettersToAdvance = parseInt(splitKey[keyIndex])
+
+    //Find the alphabet index from the input letter
+    var inputLetterInAlphabetOn = -1
+    for (alphabetLetter in splitAlphabet)
+    {
+      if (splitAlphabet[alphabetLetter] == splitInput[inputLetter])
+      {
+        inputLetterInAlphabetOn = parseInt(alphabetLetter)
+      }
+    }
+
+    //If no valid character was found in the alphabet
+    if (inputLetterInAlphabetOn == -1)
+    {
+      //Just add the input letter output
+      output += splitInput[inputLetter]
+    }
+    else
+    {
+      //Add / Subtract the index of the found letter to the corresponding number in the key
+      var finalAlphabetIndex = inputLetterInAlphabetOn + multiplier*(lettersToAdvance)
+
+      //If the index is greater than the alphabet length, keep subtracting until the index is in range
+      while (finalAlphabetIndex > splitAlphabet.length - 1)
+      {
+        finalAlphabetIndex -= splitAlphabet.length
+      }
+
+      //If the index is less than zero, keep adding until the index is in range
+      while (finalAlphabetIndex < 0)
+      {
+        finalAlphabetIndex += splitAlphabet.length
+      }
+
+      //Add the encoded letter to the output
+      output += splitAlphabet[finalAlphabetIndex]
+    }
+  }
+
+  console.log(output)
+
+  return output
+}
+</script>

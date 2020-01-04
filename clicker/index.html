@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>JJCooley - Clicker</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="/jquery-3.2.1.min.js"></script>
+  </head>
+  <body>
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h1>Atom Smasher!</h1>
+    <button onclick="saveGame()">Save</button>
+    <br>
+    <div class="clicker">
+      <h4 id="protons">Protons: 0</h4>
+      <h4 id="protonsPerSecond">Protons Per Second: 0</h4>
+      <button class="smash" id="smash" onclick="addProton()" style="background:none;cursor:pointer;border-radius:40px;-webkit-border-radius:40px;-moz-border-radius:40px;outline:0;width:300px;height:300px;float:left;display:inline;">
+        <img id="smashIcon" src="assets/atom.png" style="width:250px;height:250px;overflow:visible;">
+      </button>
+      <div class="clickerButtons" style="float:left; display:inline;">
+        <br>
+      </div>
+    </div>
+    <audio id="player">
+      <source src="assets/boop.ogg" type="audio/ogg">
+      <source src="assets/boop.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+    var protons = 0
+    var colliderTypes = ["Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"]
+    var colliders = [10, 10, 10, 10, 0, 0, 0, 0]
+    //10000 = 1 every 10 seconds
+    //1000 = 1 every 1 second
+    //100 = 1 every 0.1 seconds
+    //10 = 1 every 0.01 seconds
+    //pps = 1/(n/1000) points per second
+    //n = 1/pps*1000 ms for every point
+    //ppsTotal = for each colliderType (numberOfColliders*1/(colliderInterval/1000))
+    var colliderIntervals = [0.1, 1, 8, 47, 260, 1400, 7800, 44000]
+    var baseColliderCost = [15, 100, 1100, 12000, 130000, 1400000, 20000000, 330000000]
+    var currentColliderCost = [15, 100, 1100, 12000, 130000, 1400000, 20000000, 330000000]
+    var ms = 0
+    var lastRefreshInterval = null
+    var gotCookies = false
+
+    getGameCookies()
+    calculateCurrentCosts()
+    refreshCounters()
+
+    var atomClickerNormalSize = "250px"
+    var atomClickerHoverSize = "260px"
+    var atomClickerMouseDownSize = "240px"
+
+    $("#smash").hover(function() {
+      $("#smashIcon").stop()
+      $("#smashIcon").animate({height: atomClickerHoverSize, width: atomClickerHoverSize}, 100)
+    }, function(){
+      $("#smashIcon").stop()
+      $("#smashIcon").animate({height: atomClickerNormalSize, width: atomClickerNormalSize}, 100)
+    })
+
+    $("#smash").mousedown(function() {
+      $("#smashIcon").stop()
+      $("#smashIcon").animate({height: atomClickerMouseDownSize, width: atomClickerMouseDownSize}, 100)
+    })
+
+    $("#smash").mouseup(function() {
+      $("#smashIcon").stop()
+      $("#smashIcon").animate({height: atomClickerHoverSize, width: atomClickerHoverSize}, 100)
+
+      $("#player")[0].currentTime = 0
+      $("#player")[0].play()
+    })
+
+    $(function() {
+      for (i = 0; i < colliderTypes.length; i++)
+      {
+        $(".clickerButtons").prepend("<button class='clickerbutton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
+      }
+    })
+
+    function addProton()
+    {
+      protons++
+      refreshCounters()
+    }
+
+    function addCollider(tier)
+    {
+      colliders[tier-1]++
+      protons-=currentColliderCost[tier-1]
+      currentColliderCost[tier-1] = Math.round(baseColliderCost[tier-1] * Math.pow(1.15, colliders[tier-1]))
+
+      $("#player")[0].currentTime = 0
+      $("#player")[0].play()
+
+      saveGame()
+
+      refreshCounters()
+    }
+
+    function calculateCurrentCosts()
+    {
+      for (i = 0; i < colliders.length; i++)
+      {
+        currentColliderCost[i] = Math.round(baseColliderCost[i] * Math.pow(1.15, colliders[i]))
+      }
+    }
+
+    function calculatePointsPerSecondTotal()
+    {
+      pointsPerSecondTotal = 0
+      for (i = 0; i < colliders.length; i++)
+      {
+        //pointsPerSecondTotal+=colliders[i]*(1/(colliderIntervals[i]/1000))
+
+        pointsPerSecondTotal+=colliderIntervals[i]*colliders[i]
+      }
+      return pointsPerSecondTotal
+    }
+
+    //Refresh counters and buttons
+    function refreshCounters()
+    {
+      document.getElementById("protons").innerHTML = "Protons: " + protons
+      document.getElementById("protonsPerSecond").innerHTML = "Protons Per Second: " + roundTo(calculatePointsPerSecondTotal(), 0.1)
+      for (i = 0; i < colliders.length; i++)
+      {
+        var colliderBuyButton = document.getElementById("colliderBuyT" + (i+1))
+        if (protons >= currentColliderCost[i])
+        {
+          document.getElementById("colliderBuyT" + (i+1)).disabled = false
+        }
+        else
+        {
+          document.getElementById("colliderBuyT" + (i+1)).disabled = true
+        }
+
+        colliderBuyButton.innerHTML = colliders[i] + " " + colliderTypes[i] + " Collider: " + currentColliderCost[i] + " protons"
+      }
+    }
+
+    function getPoints()
+    {
+      var protonsPerSecond = calculatePointsPerSecondTotal()
+      if (protonsPerSecond < 100)
+      {
+        if (protonsPerSecond > 0 && ms%Math.round((1/protonsPerSecond)*100) == 0)
+        {
+          protons++
+
+          refreshCounters()
+        }
+      }
+      else
+      {
+        protons+=Math.round(protonsPerSecond/100)
+
+        refreshCounters()
+      }
+    }
+
+    function roundTo(float, decimal)
+    {
+      var multiplier = 1/decimal
+      return (Math.round(float*10))/10
+    }
+
+    var collectInBackground = false
+    var shouldRefresh = true
+
+    $(window).focus(function() {
+      if (collectInBackground)
+      {
+        console.log("Interval: " + (Date.now()-lastRefreshInterval))
+        if ((Date.now()-lastRefreshInterval) > 100)
+        {
+          var protonsBefore = protons
+          getPoints((Date.now()-lastRefreshInterval)) //Get points
+          var protonsGained = protons - protonsBefore
+          console.log("Points gained: " + protonsGained)
+        }
+        shouldRefresh = true
+      }
+    })
+
+    $(window).blur(function() {
+      if (collectInBackground)
+      {
+        shouldRefresh = false
+      }
+    })
+
+    //Run every 10ms unless the window is not in focus, and collectInBackground == false
+    var gameLoop=function()
+    {
+      if (shouldRefresh)
+      {
+        lastRefreshInterval = Date.now()
+
+        getPoints()
+
+        if (ms%1000 == 0)
+        {
+          saveGame()
+        }
+
+        ms++
+      }
+    }
+
+    window.setInterval(gameLoop, 10)
+
+
+    function setCookie(cname,cvalue,exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires=" + d.toGMTString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+      return "";
+    }
+
+    function getGameCookies()
+    {
+      if (getCookie("protons") != "")
+      {
+        protons = parseInt(getCookie("protons"))
+        var collidersSaved = JSON.parse("[" + getCookie("colliders") + "]")
+        if (colliders.length != collidersSaved.length)
+        {
+          collidersSaved.push(0)
+        }
+        colliders = collidersSaved
+      }
+
+      gotCookies = true
+    }
+
+    function saveGame()
+    {
+      if (gotCookies)
+      {
+        console.log("Saving Game: " + protons + ";" + colliders.toString())
+        setCookie("protons", protons, 50000)
+        setCookie("colliders", colliders.toString(), 50000)
+      }
+    }
+
+    function ajaxPHPRequest(input, file)
+    {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              console.log("this.responseText: " + this.responseText)
+          }
+      };
+      if (input != "")
+      {
+        xmlhttp.open("GET", file + ".php?s=" + input, true);
+      }
+      else
+      {
+        xmlhttp.open("GET", file + ".php", true);
+      }
+      xmlhttp.send();
+    }
+
+    </script>
+    <div class="wingdings" id="wingdings">
+      <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">✌☠ ✌👎👎✋👍❄✋☠☝ ☝✌💣☜</a></font>
+    </div>
+  </body>
+</html>

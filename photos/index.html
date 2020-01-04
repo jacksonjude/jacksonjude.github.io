@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley - Photos</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  </head>
+  <body oncontextmenu="return false">
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h1>Photos!</h1>
+    <?php
+    $aspectRatio4x3 = "width:350px;height:262.5px;";
+
+    $dir = 'display';
+    $images = scan_dir($dir);
+
+    function scan_dir($dir) {
+      $ignored = array('.', '..', '.DS_Store', '.htaccess');
+
+      $files = array();
+      foreach (scandir($dir) as $file) {
+          if (in_array($file, $ignored)) continue;
+          $files[$file] = filemtime($dir . '/' . $file);
+      }
+
+      arsort($files);
+      $files = array_keys($files);
+
+      return ($files) ? $files : false;
+    }
+
+    foreach( $images as $image ):
+    ?>
+    <img src="<?php echo $dir; ?>/<?php echo $image; ?>" style="<?php echo $aspectRatio4x3 ?>">
+    <?php endforeach; ?>
+    <br>
+    <a href="..">Back</a>
+    <div class="wingdings" id="wingdings">
+      <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">🏱☟⚐❄⚐💧</a></font>
+    </div>
+  </body>
+</html>

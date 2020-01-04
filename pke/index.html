@@ -1,0 +1,179 @@
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley - Public Key Encryption</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  </head>
+  <body>
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h1>Public Key Encryption Example</h1>
+    <h4>Alice (Receiver)</h4>
+    <h4 id="alice1">
+    <select id="amod" oninput="modChanged()"></select> Mod Value (Public)
+    <br>
+    <select id="aprivate" oninput="privateKeyChanged()"></select> Private Key (Private)
+    <br>
+    <input id="apublic" type="text" style="width:80px"> Public Key (Public)
+    </h4>
+    <h4>Bob (Sender)</h4>
+    <h4 id="bob">
+    <input id="bsecret" type="text" style="width:80px"> Secret Number (Private)
+    <br>
+    <input id="bpublic" type="text" style="width:80px"> Public Key (Public)
+    <br>
+    <input id="bmod" type="text" style="width:80px"> Mod Value (Public)
+    <br>
+    <br>
+    <button onclick="calculateBobPub()">Calculate</button>
+    <br>
+    <input id="bbobpub" type="text" style="width:80px"> Bob Public Number (Public)
+    </h4>
+    <h4>Alice (Receiver)</h4>
+    <h4 id="alice2">
+    <input id="abobpub" type="text" style="width:80px"> Bob Public Number (Public)
+    <br>
+    <input id="aprivate2" type="text" style="width:80px"> Private Key (Private)
+    <br>
+    <input id="amod2" type="text" style="width:80px"> Mod Value (Public)
+    <br>
+    <br>
+    <button onclick="calculateBobSecret()">Calculate</button>
+    <br>
+    <input id="asecret" type="text" style="width:80px"> Bob Secret Number
+    </h4>
+  </body>
+<script>
+
+var primesInRange = getPrimesForRange(3, 100)
+setSelectOptions("amod", primesInRange)
+
+function setSelectOptions(id, options)
+{
+  var selectObject = document.getElementById(id)
+
+  while (selectObject.hasChildNodes()) {
+    selectObject.removeChild(selectObject.lastChild);
+  }
+
+  for (option in options)
+  {
+    var optionObject = document.createElement("option")
+    optionObject.text = options[option].toString()
+    selectObject.add(optionObject)
+  }
+}
+
+function modChanged()
+{
+  var mod = parseInt(document.getElementById("amod").value)
+  var privateKeyOptionList = buildPrivateList(mod)
+  setSelectOptions("aprivate", privateKeyOptionList)
+}
+
+function privateKeyChanged()
+{
+  var privateKey = parseInt(document.getElementById("aprivate").value)
+  var mod = parseInt(document.getElementById("amod").value)
+  console.log(privateKey)
+  console.log(mod)
+  var publicKey = calculateInverse(privateKey, mod)
+  document.getElementById("apublic").value = publicKey
+}
+
+function calculateBobPub()
+{
+  var secretNumber = parseInt(document.getElementById("bsecret").value)
+  var publicKey = parseInt(document.getElementById("bpublic").value)
+  var mod = parseInt(document.getElementById("bmod").value)
+
+  var bobpub = (secretNumber * publicKey) % mod
+  document.getElementById("bbobpub").value = bobpub.toString()
+}
+
+function calculateBobSecret()
+{
+  var bobpub = parseInt(document.getElementById("abobpub").value)
+  var privateKey = parseInt(document.getElementById("aprivate2").value)
+  var mod = parseInt(document.getElementById("amod2").value)
+
+  var bobsecret = (bobpub * privateKey) % mod
+  document.getElementById("asecret").value = bobsecret.toString()
+}
+
+function getPrimesForRange(start, end)
+{
+  var primelist = []
+  if (start < end)
+  {
+    for (var i = start; i <= end; i++)
+    {
+      if (isPrime(i))
+      {
+        primelist.push(i)
+      }
+    }
+  }
+  else
+  {
+    console.log("Invalid range!")
+  }
+
+  return primelist
+}
+
+function isPrime(num)
+{
+  for(var i = 2; i < num; i++)
+    if(num % i === 0) return false
+  return num !== 1
+}
+
+function buildPrivateList(mod)
+{
+  var potentialVals = []
+  var privateList = []
+  for(var i = 0; i < mod - 2; i++){
+    potentialVals.push(i)
+  }
+  potentialVals[1] = 0
+  for (var j = 0; j < mod - 2; j++) {
+    if(potentialVals[j] !== 0) {
+      privateList.push(j)
+      var inverse = calculateInverse(j,mod)
+      potentialVals[inverse] = 0
+    }
+  }
+  return privateList
+}
+
+function calculateInverse(a,m)
+{
+  var v = 1
+  var d = a
+  var u = (a == 1)
+  var t = 1-u
+  if (t == 1) {
+    var c = m % a
+    u = Math.floor(m/a)
+    while (c != 1 && t == 1) {
+       var q = Math.floor(d/c)
+       d = d % c
+       v = v + q*u
+       t = (d != 1)
+       if (t == 1) {
+         q = Math.floor(c/d)
+         c = c % d
+         u = u + q*v
+       }
+    }
+    u = v*(1 - t) + t*(m - u)
+  }
+  return u
+}
+
+</script>
+
+</html>

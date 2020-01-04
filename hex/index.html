@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley - Hex Converter</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="converter.js"></script>
+  </head>
+  <body>
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h1>Hex Converter</h1>
+    <h4>
+    <input type="text" id="hexInput" oninput="calculateHexToBin()"> Hex</input>
+    <br>
+    <input type="text" id="binInput" oninput="calculateBinToHex()"> Binary</input>
+    </h4>
+    <h4>
+    <input type="text" id="decimalInput" oninput="calculateDecimalToHex()"> Decimal</input>
+    <br>
+    <input type="text" id="asciiInput" oninput="calculateASCIIToHex(this.value)"> ASCII</input>
+    </h4>
+    <br>
+    <br>
+    <br>
+    <a href="..">Back</a>
+    <div class="wingdings" id="wingdings">
+      <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">☟☜✠ ✌💧👍✋✋ ✌☠👎 👎☜👍✋💣✌☹✏</a></font>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,439 @@
+<!doctype html>
+<html>
+  <div class="background"></div>
+  <head>
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>JJCooley - Snake</title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  </head>
+  <body>
+    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <h4 id="scorelabel">Score: 0 HI: 0</h4>
+    <input type="checkbox" id="rainbow" />
+    <br>
+    <div id="gridcontainer" style="float:left;background:#BBB">
+    </div>
+    <div style="clear:both;">
+    </div>
+  </body>
+
+  <script>
+  var score = 0
+  var highscore = 0
+
+  var prevScore = score
+
+  var gridsize = 30
+  var gridelementsize = 14
+  var margin = 2.5
+  var roundness = 2
+
+  var gridstates = []
+
+  var startingSnakePositions = [convertToGridNumber(Math.floor(gridsize/2)-1, Math.floor(gridsize/2)-1), convertToGridNumber(Math.floor(gridsize/2)-1, Math.floor(gridsize/2)-1) + 1, convertToGridNumber(Math.floor(gridsize/2)-1, Math.floor(gridsize/2)-1) + 2]
+  var snakePositions = startingSnakePositions.concat()
+
+  var direction = 0
+  var firstDirectionThisTurn = 0
+
+  var snakeSpeed = 120
+  var appleSpawnRate = (1/16)
+
+  var startedGame = false
+
+  var rainbowSnake = false
+
+  $(function () {
+    var cookies = document.cookie.split(";")
+
+    for (cookie in cookies)
+    {
+      var cookieName = cookies[cookie].replace(" ", "").split("=")[0]
+      if (cookieName == "highscore")
+      {
+        highscore = cookies[cookie].replace(" ", "").split("=")[1]
+      }
+    }
+
+    $("#scorelabel").text("Score: " + score + " HI: " + highscore)
+    $("#rainbow").attr("onclick", "toggleRainbow(this)")
+
+    setupGrid("snake", 0)
+
+    $(document).keydown(function(e) {
+      switch (e.which) {
+        case 37: // left
+          if (direction != 3 && firstDirectionThisTurn != 3)
+          {
+            direction = 1
+          }
+          break
+        case 38: // up
+          if (direction != 4 && firstDirectionThisTurn != 4)
+          {
+            direction = 2
+          }
+          break
+        case 39: // right
+          if (direction != 1 && firstDirectionThisTurn != 1 && direction != 0)
+          {
+            direction = 3
+          }
+          break
+        case 40: // down
+          if (direction != 2 && firstDirectionThisTurn != 2)
+          {
+            direction = 4
+          }
+          break
+        default: return // exit this handler for other keys
+      }
+
+      switch (e.which) {
+        case 37:
+        case 38:
+        case 39:
+        case 40:
+          e.preventDefault()
+          break
+        default: return
+      }
+    })
+
+    var gameLoop = function ()
+    {
+      prevScore = score
+      firstDirectionThisTurn = direction
+
+      var originalPosition = convertToXY(snakePositions[0])
+
+      var xPos = originalPosition[0]
+      var yPos = originalPosition[1]
+
+      switch (direction)
+      {
+        case 1:
+          xPos -= 1
+          break
+        case 2:
+          yPos -= 1
+          break
+        case 3:
+          xPos += 1
+          break
+        case 4:
+          yPos += 1
+          break
+      }
+
+      var movedPosition = convertToGridNumber(xPos, yPos)
+
+      updateOrderedSnakePositions(movedPosition)
+
+      if (hasDuplicates(snakePositions) || xPos < 0 || xPos > gridsize-1 || yPos < 0 || yPos > gridsize-1)
+      {
+        setTimeout(restartGame, 1000)
+        return
+      }
+
+      if (direction != 0)
+      {
+        if (!startedGame)
+        {
+          startedGame = true
+          $("#scorelabel").text("Score: " + score + " HI: " + highscore)
+        }
+
+        spawnRandomApple()
+      }
+
+      updateGridStates()
+
+      if (prevScore != score)
+      {
+        $("#scorelabel").text("Score: " + score + " HI: " + highscore)
+      }
+
+      setTimeout(gameLoop, snakeSpeed)
+    }
+
+    var restartGame = function ()
+    {
+      if (score > highscore)
+      {
+        highscore = score
+        document.cookie = "highscore=" + highscore.toString() + "; expires=Thu, 18 Jun 2026 12:00:00 UTC; path=/";
+      }
+
+      $("#scorelabel").text("Score: " + score + " HI: " + highscore)
+
+      score = 0
+
+      for (state in gridstates)
+      {
+        gridstates[state] = 0
+        setColor($("#snake").find("#" + state))
+      }
+
+      snakePositions = startingSnakePositions.concat()
+      direction = 0
+
+      startedGame = false
+
+      setTimeout(gameLoop, snakeSpeed)
+    }
+
+    setTimeout(gameLoop, snakeSpeed)
+  })
+
+  function setColor(obj)
+  {
+    state = gridstates[parseInt($( obj ).attr('id'))]
+
+    switch (state)
+    {
+      case 0:
+      obj.css("background", "#eee")
+      break
+      case 1:
+      obj.css("background", "#494")
+      break
+      case 2:
+      obj.css("background", "#449")
+      break
+      case 3:
+      obj.css("background", "#944")
+      break
+      case 4:
+      obj.css("background", "#000")
+      break
+      case 10:
+      obj.css("background", "#FF0000")
+      break
+      case 11:
+      obj.css("background", "#FF9100")
+      break
+      case 12:
+      obj.css("background", "#FFFF00")
+      break
+      case 13:
+      obj.css("background", "#2BFF00")
+      break
+      case 14:
+      obj.css("background", "#0077FF")
+      break
+      case 15:
+      obj.css("background", "#6600FF")
+      break
+      case 16:
+      obj.css("background", "#FF00EF")
+      break
+      default:
+      obj.css("background", "#eee")
+      break
+    }
+  }
+
+  function setupGrid(id, defaultState)
+  {
+    $("#gridcontainer").append($("<div>", {"id": id, "class": "grid"}))
+
+    $("#" + id).css("border-radius", (100).toString() + "px")
+
+    //Set grid container size
+    $("#" + id).css("width", ((gridsize * gridelementsize) + (margin*gridsize*2)).toString() + "px")
+    $("#" + id).css("height", ((gridsize * gridelementsize) + (margin*gridsize*2)).toString() + "px")
+
+    //Adding grid-elements
+    for (i=0; i < Math.pow(gridsize, 2); i++)
+    {
+      $("#" + id).append($("<div>", {"id": i.toString(), "class": "grid-element"}))
+      gridstates.push(defaultState)
+    }
+
+    //CSS setup
+    $("#" + id).find(".grid-element").css("width", gridelementsize)
+    $("#" + id).find(".grid-element").css("height", gridelementsize)
+    $("#" + id).find(".grid-element").css("float", "left")
+    $("#" + id).find(".grid-element").css("margin", margin.toString() + "px")
+    $("#" + id).find(".grid-element").css("border-radius", roundness.toString() + "px")
+    $("#" + id).find(".grid-element").css("transition", "background-color 0.15s ease")
+    $("#" + id).find(".grid-element").css("vertical-align", "middle")
+    setColor($("#" + id).find(".grid-element"))
+  }
+
+  function convertToXY(gridNumber)
+  {
+    var xPos = gridNumber % gridsize
+    var yPos = Math.floor(gridNumber / gridsize)
+
+    return [xPos, yPos]
+  }
+
+  function convertToGridNumber(xPos, yPos)
+  {
+    var gridNumber = ((yPos * gridsize) + xPos)
+
+    return gridNumber
+  }
+
+  function updateOrderedSnakePositions(newHeadPosition)
+  {
+    if (snakePositions[0] != newHeadPosition)
+    {
+      snakePositions.pop()
+      snakePositions.unshift(newHeadPosition)
+    }
+  }
+
+  function updateGridStates()
+  {
+    for (state in gridstates)
+    {
+      var partOfSnake = false
+      var snakeHead = false
+      var snakeGridPosition
+      for (snakePosition in snakePositions)
+      {
+        if (state == snakePositions[snakePosition])
+        {
+          //snakeGridPosition = snakePosition
+          snakeGridPosition = snakePositions.length - snakePosition - 1
+          partOfSnake = true
+
+          if (snakePosition == 0)
+          {
+            snakeHead = true
+          }
+        }
+      }
+
+      if (gridstates[state] == 3 && snakeHead)
+      {
+        addToSnake()
+      }
+
+      if (snakeHead)
+      {
+        gridstates[state] = rainbowSnake ? (10 + 6-(snakeGridPosition % 7)) : 2
+      }
+      else if (partOfSnake)
+      {
+        gridstates[state] = rainbowSnake ? (10 + 6-(snakeGridPosition % 7)) : 1
+      }
+      else if (gridstates[state] != 3)
+      {
+        gridstates[state] = 0
+      }
+    }
+
+    for (state in gridstates)
+    {
+      setColor($("#snake").find("#" + state))
+    }
+  }
+
+  function hasDuplicates(array) {
+    return (new Set(array)).size !== array.length;
+  }
+
+  function addToSnake()
+  {
+    score += 1
+
+    var tailPos = convertToXY(snakePositions[snakePositions.length-1])
+    var tailX = tailPos[0]
+    var tailY = tailPos[1]
+
+    var tail2Pos = convertToXY(snakePositions[snakePositions.length-2])
+    var tail2X = tail2Pos[0]
+    var tail2Y = tail2Pos[1]
+
+    var snakePartToAddX = tailX
+    var snakePartToAddY = tailY
+
+    if (tailX - tail2X == 1) //right
+    {
+      snakePartToAddX = tailX + 1
+    }
+
+    if (tailX - tail2X == -1) //left
+    {
+      snakePartToAddX = tailX - 1
+    }
+
+    if (tailY - tail2Y == 1) //down
+    {
+      snakePartToAddY = tailY + 1
+    }
+
+    if (tailY - tail2Y == -1) //up
+    {
+      snakePartToAddY = tailY - 1
+    }
+
+    var snakePartToAdd = convertToGridNumber(snakePartToAddX, snakePartToAddY)
+
+    snakePositions.push(snakePartToAdd)
+  }
+
+  function spawnRandomApple()
+  {
+    if (Math.random() < (appleSpawnRate))
+    {
+      var spawnedApple = false
+
+      var triesLeft = 50
+      while (!spawnedApple && triesLeft > 0)
+      {
+        triesLeft -= 1
+        var appleXPos = Math.floor(Math.random()*gridsize)
+        var appleYPos = Math.floor(Math.random()*gridsize)
+
+        var applePos = convertToGridNumber(appleXPos, appleYPos)
+
+        if (gridstates[applePos] == 0)
+        {
+          gridstates[applePos] = 3
+          spawnedApple = true
+        }
+      }
+    }
+  }
+
+  function saveSnake()
+  {
+    var snakeAsString = ""
+    for (snakePart in snakePositions)
+    {
+      if (snakePart != 0)
+      {
+        snakeAsString += ";"
+      }
+
+      snakeAsString += snakePositions[snakePart].toString()
+    }
+
+    return snakeAsString
+  }
+
+  function loadSnake(savedSnake)
+  {
+    snakePositions = []
+    for (snakePart in savedSnake.split(";"))
+    {
+      var intSnakePart = parseInt(savedSnake.split(";")[snakePart])
+      snakePositions.push(intSnakePart)
+    }
+    updateGridStates()
+  }
+
+  function toggleRainbow(checkbox)
+  {
+    rainbowSnake = checkbox.checked
+  }
+  </script>
+</html>

@@ -75,12 +75,10 @@
       $("#player")[0].play()
     })
 
-    $(function() {
-      for (i = 0; i < colliderTypes.length; i++)
-      {
-        $(".clickerButtons").prepend("<button class='clickerbutton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
-      }
-    })
+    for (i = 0; i < colliderTypes.length; i++)
+    {
+      $(".clickerButtons").prepend("<button class='clickerbutton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
+    }
 
     function addProton()
     {

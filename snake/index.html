@@ -12,9 +12,12 @@
   <body>
     <img src="/assets/favicon.ico" style="width:50px;height:50px;">
     <h4 id="scorelabel">Score: 0 HI: 0</h4>
-    <input type="checkbox" id="rainbow" />
+    <h4 style="margin:5px;">
+      <input type="checkbox" id="rainbow" /> Rainbow
+      <input type="checkbox" id="dark" /> Dark
+    </h4>
     <br>
-    <div id="gridcontainer" style="float:left;background:#BBB">
+    <div id="gridcontainer" style="float:left;background-color:#BBB">
     </div>
     <div style="clear:both;">
     </div>
@@ -45,6 +48,7 @@
   var startedGame = false
 
   var rainbowSnake = false
+  var darkBackground = false
 
   $(function () {
     var cookies = document.cookie.split(";")
@@ -60,6 +64,7 @@
 
     $("#scorelabel").text("Score: " + score + " HI: " + highscore)
     $("#rainbow").attr("onclick", "toggleRainbow(this)")
+    $("#dark").attr("onclick", "toggleDark(this)")
 
     setupGrid("snake", 0)
 
@@ -196,7 +201,7 @@
     switch (state)
     {
       case 0:
-      obj.css("background", "#eee")
+      obj.css("background", "#" + (darkBackground ? "111" : "eee"))
       break
       case 1:
       obj.css("background", "#494")
@@ -223,16 +228,16 @@
       obj.css("background", "#2BFF00")
       break
       case 14:
-      obj.css("background", "#0077FF")
+      obj.css("background", "#0099ff") //0077FF
       break
       case 15:
-      obj.css("background", "#6600FF")
+      obj.css("background", "#a14eff") //6600FF
       break
       case 16:
       obj.css("background", "#FF00EF")
       break
       default:
-      obj.css("background", "#eee")
+      obj.css("background", "#fff")
       break
     }
   }
@@ -434,6 +439,20 @@
   function toggleRainbow(checkbox)
   {
     rainbowSnake = checkbox.checked
+  }
+
+  function toggleDark(checkbox)
+  {
+    darkBackground = checkbox.checked
+
+    if (darkBackground)
+    {
+      $("#gridcontainer").css("background-color", "#000") //444
+    }
+    else
+    {
+      $("#gridcontainer").css("background-color", "#bbb")
+    }
   }
   </script>
 </html>

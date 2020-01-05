@@ -1,44 +1,28 @@
 <!DOCTYPE html>
-
 <html>
-  <div class="background"></div>
   <head>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./index_files/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>JJCooley - Photos</title>
-    <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="./index_files/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./index_files/favicon.ico">
   </head>
-  <body oncontextmenu="return false">
-    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+  <body>
+    <div class="background"></div>
+    <img src="./index_files/favicon.ico" style="width:50px;height:50px;">
     <h1>Photos!</h1>
-    <?php
-    $aspectRatio4x3 = "width:350px;height:262.5px;";
-
-    $dir = 'display';
-    $images = scan_dir($dir);
-
-    function scan_dir($dir) {
-      $ignored = array('.', '..', '.DS_Store', '.htaccess');
-
-      $files = array();
-      foreach (scandir($dir) as $file) {
-          if (in_array($file, $ignored)) continue;
-          $files[$file] = filemtime($dir . '/' . $file);
-      }
-
-      arsort($files);
-      $files = array_keys($files);
-
-      return ($files) ? $files : false;
-    }
-
-    foreach( $images as $image ):
-    ?>
-    <img src="<?php echo $dir; ?>/<?php echo $image; ?>" style="<?php echo $aspectRatio4x3 ?>">
-    <?php endforeach; ?>
+      <img src="./index_files/IMG_0500.JPG" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_0410.JPG" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_0320.JPG" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_1758.jpg" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_2852.jpg" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_1729.jpg" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_0087.jpg" style="width:350px;height:262.5px;">
+      <img src="./index_files/IMG_0118.jpg" style="width:350px;height:262.5px;">
+      <br>
+    <a href="https://jjcooley.ddns.net/">Back</a>
     <br>
-    <a href="..">Back</a>
+    <br>
     <div class="wingdings" id="wingdings">
       <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">🏱☟⚐❄⚐💧</a></font>
     </div>

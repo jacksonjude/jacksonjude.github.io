@@ -30,7 +30,7 @@
     <script>
     var protons = 0
     var colliderTypes = ["Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"]
-    var colliders = [10, 10, 10, 10, 0, 0, 0, 0]
+    var colliders = [0, 0, 0, 0, 0, 0, 0, 0]
     //10000 = 1 every 10 seconds
     //1000 = 1 every 1 second
     //100 = 1 every 0.1 seconds
@@ -47,11 +47,12 @@
 
     for (i = 0; i < colliderTypes.length; i++)
     {
-      $(".clickerButtons").append("<button class='clickerbutton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
+      $(".clickerButtons").append("<button class='clickerButton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
     }
 
     getGameCookies()
     calculateCurrentCosts()
+    refreshColliderButtonCosts()
     refreshCounters()
 
     var atomClickerNormalSize = "250px"
@@ -97,6 +98,7 @@
       saveGame()
 
       refreshCounters()
+      refreshColliderButtonCosts()
     }
 
     function calculateCurrentCosts()
@@ -124,6 +126,11 @@
     {
       document.getElementById("protons").innerHTML = "Protons: " + protons
       document.getElementById("protonsPerSecond").innerHTML = "Protons Per Second: " + roundTo(calculatePointsPerSecondTotal(), 0.1)
+      refreshColliderButtonDisabled()
+    }
+
+    function refreshColliderButtonDisabled()
+    {
       for (i = 0; i < colliders.length; i++)
       {
         var colliderBuyButton = document.getElementById("colliderBuyT" + (i+1))
@@ -135,8 +142,16 @@
         {
           document.getElementById("colliderBuyT" + (i+1)).disabled = true
         }
+      }
+    }
 
-        colliderBuyButton.innerHTML = colliders[i] + " " + colliderTypes[i] + " Collider: " + currentColliderCost[i] + " protons"
+    function refreshColliderButtonCosts()
+    {
+      for (i = 0; i < colliders.length; i++)
+      {
+        var colliderBuyButton = document.getElementById("colliderBuyT" + (i+1))
+
+        colliderBuyButton.innerHTML = "<span style='left: 35px; position: relative;'>" + colliders[i] + " " + colliderTypes[i] + " Collider: " + currentColliderCost[i] + " protons" + "</span>"
       }
     }
 

@@ -127,7 +127,8 @@ a:active, a:focus, a:hover {
 .clickerButton
 {
   height:40px;
-  width:300px;
+  width:350px;
+  text-align: left;
 }
 
 button:disabled

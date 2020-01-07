@@ -312,6 +312,7 @@
           {
             snakeHead = true
           }
+          break
         }
       }
 
@@ -322,11 +323,11 @@
 
       if (snakeHead)
       {
-        gridstates[state] = rainbowSnake ? (10 + 6-(snakeGridPosition % 7)) : 2
+        gridstates[state] = rainbowSnake ? (10 + (snakePosition % 7)) : 2
       }
       else if (partOfSnake)
       {
-        gridstates[state] = rainbowSnake ? (10 + 6-(snakeGridPosition % 7)) : 1
+        gridstates[state] = rainbowSnake ? (10 + (snakePosition % 7)) : 1
       }
       else if (gridstates[state] != 3)
       {

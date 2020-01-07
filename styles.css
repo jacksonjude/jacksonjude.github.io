@@ -1,6 +1,11 @@
 @font-face {
-    font-family: '8bitoperator';
-    src: url("assets/8bitoperator.ttf");
+  font-family: '8bitoperator';
+  src: url("assets/8bitoperator.ttf");
+}
+
+@font-face {
+  font-family: 'Symbola';
+  src: url("assets/Symbola.ttf");
 }
 
 .blur {
@@ -175,6 +180,7 @@ tr:nth-child(even) {
 .wingdings {
   position: fixed;
   bottom: 0;
+  font-family: "Symbola"
 }
 
 #searchbox {

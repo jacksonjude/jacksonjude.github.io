@@ -21,7 +21,6 @@
         <img id="smashIcon" src="assets/atom.png" style="width:250px;height:250px;overflow:visible;">
       </button>
       <div class="clickerButtons" style="float:left; display:inline;">
-        <br>
       </div>
     </div>
     <audio id="player">
@@ -48,7 +47,7 @@
 
     for (i = 0; i < colliderTypes.length; i++)
     {
-      $(".clickerButtons").prepend("<button class='clickerbutton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
+      $(".clickerButtons").append("<button class='clickerbutton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
     }
 
     getGameCookies()

@@ -15,17 +15,21 @@
     <button onclick="saveGame()">Save</button>
     <br>
     <div class="clicker">
-      <h4 id="protons">Protons: 0</h4>
-      <h4 id="protonsPerSecond">Protons Per Second: 0</h4>
+      <h4 style="margin-bottom: 0px;" id="protons">Protons: 0</h4>
+      <h4 style="margin-top: 0px;" id="protonsPerSecond">Protons Per Second: 0</h4>
       <button class="smash" id="smash" onclick="addProton()" style="background:none;cursor:pointer;border-radius:40px;-webkit-border-radius:40px;-moz-border-radius:40px;outline:0;width:300px;height:300px;float:left;display:inline;">
         <img id="smashIcon" src="assets/atom.png" style="width:250px;height:250px;overflow:visible;">
       </button>
       <div class="clickerButtons" style="float:left; display:inline;">
       </div>
     </div>
-    <audio id="player">
+    <audio id="boopPlayer">
       <source src="assets/boop.ogg" type="audio/ogg">
       <source src="assets/boop.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="chingPlayer">
+      <source src="assets/ching.ogg" type="audio/ogg">
+      <source src="assets/ching.mp3" type="audio/mpeg">
     </audio>
     <script>
     var protons = 0
@@ -49,6 +53,7 @@
     {
       $(".clickerButtons").append("<button class='clickerButton' id='colliderBuyT" + (i+1) + "' onclick='addCollider(" + (i+1) + ")' style='background:#dddddd url(assets/ele" + (i+1) + ".png) 3px 3px no-repeat;background-size: 30px 30px;'>" + colliderTypes[i] + "</button><br>")
     }
+    $("#chingPlayer")[0].volume = 0.2
 
     getGameCookies()
     calculateCurrentCosts()
@@ -76,8 +81,8 @@
       $("#smashIcon").stop()
       $("#smashIcon").animate({height: atomClickerHoverSize, width: atomClickerHoverSize}, 100)
 
-      $("#player")[0].currentTime = 0
-      $("#player")[0].play()
+      $("#boopPlayer")[0].currentTime = 0
+      $("#boopPlayer")[0].play()
     })
 
     function addProton()
@@ -92,8 +97,8 @@
       protons-=currentColliderCost[tier-1]
       currentColliderCost[tier-1] = Math.round(baseColliderCost[tier-1] * Math.pow(1.15, colliders[tier-1]))
 
-      $("#player")[0].currentTime = 0
-      $("#player")[0].play()
+      $("#chingPlayer")[0].currentTime = 0
+      $("#chingPlayer")[0].play()
 
       saveGame()
 
@@ -124,8 +129,8 @@
     //Refresh counters and buttons
     function refreshCounters()
     {
-      document.getElementById("protons").innerHTML = "Protons: " + protons
-      document.getElementById("protonsPerSecond").innerHTML = "Protons Per Second: " + roundTo(calculatePointsPerSecondTotal(), 0.1)
+      document.getElementById("protons").innerHTML = "Protons: " + protonString(protons)
+      document.getElementById("protonsPerSecond").innerHTML = "Protons Per Second: " + protonString(roundTo(calculatePointsPerSecondTotal(), 0.1))
       refreshColliderButtonDisabled()
     }
 
@@ -151,7 +156,7 @@
       {
         var colliderBuyButton = document.getElementById("colliderBuyT" + (i+1))
 
-        colliderBuyButton.innerHTML = "<span style='left: 35px; position: relative;'>" + colliders[i] + " " + colliderTypes[i] + " Collider: " + currentColliderCost[i] + " protons" + "</span>"
+        colliderBuyButton.innerHTML = "<span style='left: 35px; position: relative;'>" + colliders[i] + " " + colliderTypes[i] + " Collider: " + protonString(currentColliderCost[i]) + " protons" + "</span>"
       }
     }
 
@@ -179,6 +184,31 @@
     {
       var multiplier = 1/decimal
       return (Math.round(float*10))/10
+    }
+
+    function protonString(protonNum)
+    {
+      var protonStringChars = []
+      var protonNumChars = protonNum.toString().split("")
+      for (var i=protonNumChars.length-1; i >= 0; i--)
+      {
+        protonStringChars.push(protonNumChars[i])
+
+        if (i > 0 && (protonNumChars.length-i) % 3 == 0)
+        {
+          protonStringChars.push(",")
+        }
+      }
+
+      protonStringChars = protonStringChars.reverse()
+
+      var protonString = ""
+      for (i=0; i < protonStringChars.length; i++)
+      {
+        protonString += protonStringChars[i]
+      }
+
+      return protonString
     }
 
     var collectInBackground = false

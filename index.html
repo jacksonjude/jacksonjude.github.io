@@ -123,6 +123,11 @@
         checkForSmallScreen(true)
       })
 
+      if (!mobile)
+      {
+        document.body.style.zoom = "125%"
+      }
+
       function checkForSmallScreen(withEvent)
       {
         if ($(window).width() < 539 && !mobile)

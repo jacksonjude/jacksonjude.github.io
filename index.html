@@ -2,12 +2,12 @@
 
 <html>
   <head>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>JJCooley</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    <script src="/jquery-3.2.1.min.js"></script>
+    <script src="./jquery-3.2.1.min.js"></script>
 
     <style>
     div.dog {
@@ -37,7 +37,7 @@
     <div class="homepagelinks" id="homepagelinks">
       <img src="/assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
       <h1>JJCooley</h1>
-      <h4>Photographer, Programmer, <br> and Keyboardist</h4>
+      <h4>Programmer, Photographer, <br> and Keyboardist</h4>
       <a href="coding">Coding</a>
       <br>
       <a href="photos">Photos</a>
@@ -97,7 +97,7 @@
       var inTextBox = false
       $('#searchtextbox').mouseout(function () {
         inTextBox = false
-        $('#searchtextbox').blur();
+        $('#searchtextbox').blur()
       })
 
       $('#searchtextbox').mouseenter(function () {
@@ -123,9 +123,9 @@
         checkForSmallScreen(true)
       })
 
-      if (!mobile)
+      if (mobile)
       {
-        document.body.style.zoom = "125%"
+        document.body.zoom = 100%
       }
 
       function checkForSmallScreen(withEvent)

@@ -47,8 +47,8 @@
   bottom: 0px;
   background: rgba(255,255,255,.100);
   z-index: 0;
-  width:100;
-  height:100;
+  width: 100;
+  height: 100;
 }
 
 .background {
@@ -79,6 +79,7 @@ html {
   background-color: #444444;*/
 
   background-color: #444444;
+  zoom: 110%;
 }
 
 h1, h2, h3, h4, a:link, a:visited, a:active, p, label {
@@ -176,7 +177,6 @@ tr:nth-child(even) {
   padding-right:10px;
   border-radius: 5px;
 }
-
 
 .wingdings {
   position: fixed;

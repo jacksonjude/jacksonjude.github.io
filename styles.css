@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: '8bitoperator-mono';
+  src: url("assets/8bitoperator-mono.ttf");
+}
+
+@font-face {
   font-family: 'Symbola';
   src: url("assets/Symbola.ttf");
 }

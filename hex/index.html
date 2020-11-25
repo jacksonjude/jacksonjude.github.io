@@ -6,26 +6,43 @@
     <title>JJCooley - Hex Converter</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="https://peterolson.github.io/BigInteger.js/BigInteger.min.js"></script>
     <script src="converter.js"></script>
+    <style>
+    textarea {
+      background-color: #333;
+      color: white;
+      font-family: "8bitoperator-mono";
+      min-width: 435px;
+      min-height: 33px;
+      height: 33px;
+    }
+    </style>
   </head>
   <body>
     <div class="background"></div>
     <img src="/assets/favicon.ico" style="width:50px;height:50px;">
     <h1>Hex Converter</h1>
+    <div style="float: left; position: relative; left: 20px;">
     <h4>
-    <input type="text" id="hexInput" oninput="calculateHexToBin()"> Hex</input>
+    <textarea id="hex" oninput="convertFromBase(kHex, this.value)"></textarea> Hex
     <br>
-    <input type="text" id="binInput" oninput="calculateBinToHex()"> Binary</input>
-    </h4>
-    <h4>
-    <input type="text" id="decimalInput" oninput="calculateDecimalToHex()"> Decimal</input>
+    <textarea id="oct" oninput="convertFromBase(kOct, this.value)"></textarea> Octal
     <br>
-    <input type="text" id="asciiInput" oninput="calculateASCIIToHex(this.value)"> ASCII</input>
+    <textarea id="bin" oninput="convertFromBase(kBin, this.value)"></textarea> Binary
     </h4>
     <br>
+    <a style="position: fixed; left: 8px" href="..">Back</a>
+    </div>
+    <div style="float: right; position: relative; right: 20px;">
+    <h4>
+    <textarea id="decsum" oninput="convertFromBase(kDecSum, this.value)"></textarea> Summed Decimal
     <br>
+    <textarea id="decspaced" oninput="convertFromBase(kDecSpaced, this.value)"></textarea> Spaced Decimal
     <br>
-    <a href="..">Back</a>
+    <textarea id="ascii" oninput="convertFromBase(kASCII, this.value)"></textarea> ASCII
+    </h4>
+    </div>
     <div class="wingdings" id="wingdings">
       <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">☟☜✠ ✌💧👍✋✋ ✌☠👎 👎☜👍✋💣✌☹✏</a></font>
     </div>

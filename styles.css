@@ -28,7 +28,7 @@
   z-index: -1;
   display: block;
 
-  background: url(space.png);
+  background: url(assets/space-60d.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -64,7 +64,7 @@
 
   display: block;
 
-  background: url(assets/space.png);
+  background: url(assets/space-60d.jpeg);
   background-size: cover;
 
   -webkit-filter: blur(5px);

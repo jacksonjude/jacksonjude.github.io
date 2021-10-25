@@ -3,13 +3,11 @@
 <html>
   <head>
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./assets/discord-invite.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>JJCooley</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico" />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <script src="./jquery-3.2.1.min.js"></script>
-    <script src="./assets/discord-invite.js"></script>
 
     <style>
     div.dog {
@@ -45,9 +43,7 @@
       <a href="photos">Photos</a>
       <br>
       <br>
-      <a href="https://map.jacksonjude.com">USA Election Map</a>
       <br>
-      <a href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479">Bussr: SF</a>
       <br>
       <br>
     </div>
@@ -68,8 +64,10 @@
     <br>
 
     <div class="boxcontainer" id="socialcontainer" style="width:150px">
-      <div class="box" style="height:200px;padding-left:0px;padding-right:0px">
-        <h4><center>Socials</center></h4>
+      <div class="box" style="height:190px;padding-left:0px;padding-right:0px">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <h4 style="margin: 10px; margin-bottom: 20px; font-size: 22px; text-decoration: underline">Socials</h4>
+        </div>
         <a href="https://github.com/jacksonjude" target="_blank" style="text-decoration: none;"><img src="assets/github.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
         <a href="https://www.linkedin.com/in/jackson-cooley-4754b41b9/" target="_blank" style="text-decoration: none;"><img src="assets/linkedin.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
         <br>
@@ -80,10 +78,28 @@
       </div>
     </div>
 
+    <div class="boxcontainer" id="projectscontainer" style="width:200px;">
+      <div class="box" style="height:160px; padding-left:0px; padding-right:0px;">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Projects</h4>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; font-size: 16px">
+          <img style="width: 40px; height: 40px" src="assets/election-map-icon.png" /><a href="https://map.jacksonjude.com">Election Map</a>
+        </div>
+        <div style="padding-top: 10px;"></div>
+        <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
+          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/bussr-icon.png" /><a href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479">Bussr SF</a>
+        </div>
+      </div>
+    </div>
+
     <div class="boxcontainer" id="linkcontainer" style="width:150px">
       <div class="box">
-        <h4><center>Links</center></h4>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <h4 style="margin: 10px; margin-bottom: 15px; font-size: 22px; text-decoration: underline">Misc</h4>
+        </div>
         <font size="2px"><center><a href="/snake" style="text-decoration: none;">Snake Game</a></center></font>
+        <font size="2px"><center><a href="/Minesweeper" style="text-decoration: none;">Minesweeper</a></center></font>
         <font size="2px"><center><a href="/hex" style="text-decoration: none;">Hex Converter</a></center></font>
         <br>
       </div>

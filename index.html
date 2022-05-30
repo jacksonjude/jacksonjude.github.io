@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html style="overflow: hidden;">
   <head>
     <link rel="stylesheet" href="./styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>JJCooley</title>
+    <meta charset="utf-8">
+    <title>JacksonJude</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico" />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <script src="./jquery-3.2.1.min.js"></script>
@@ -18,24 +19,28 @@
       animation-timing-function: linear;
     }
 
+    div.dog:hover {
+      animation-play-state: paused;
+    }
+
     @keyframes offScreen {
-      from {left: 130%}
+      from {left: 200%}
       to {left: -30%}
     }
     </style>
   </head>
-  <body style="">
+  <body>
     <div class="background"></div>
     <div class="nooverflow" id="searchnooverflow" style="float:right;">
-    <div class="searchcontainer" id="searchcontainer">
-      <img src="/assets/searchicon.png", id="searchicon", style="width:20px; height:20px; float:right;"></>
-      <form action="/search" id="searchbox">
-        <input type="text" name="search" id="searchtextbox">
-      </form>
+      <div class="searchcontainer" id="searchcontainer">
+        <img src="assets/searchicon.png", id="searchicon", style="width:20px; height:20px; float:right;"></>
+        <form action="/search" id="searchbox">
+          <input type="text" name="search" id="searchtextbox">
+        </form>
+      </div>
     </div>
-    </div>
+    <img src="assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
     <div class="homepagelinks" id="homepagelinks">
-      <img src="/assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
       <h1>JJCooley</h1>
       <h4>Programmer person<br>UCSB CS c/o 2024</h4>
       <a href="coding">Coding</a>
@@ -46,11 +51,12 @@
       <br>
       <br>
       <br>
+      <br>
     </div>
 
     <div class="dog">
       <a href="http://undertale.com" target="_blank" style="box-shadow:initial">
-        <img src="/assets/annoyingLeft.gif" style="width:62.5px;height:50px;" />
+        <img src="assets/annoyingLeft.gif" style="width:62.5px;height:50px;" />
       </a>
     </div>
 

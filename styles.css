@@ -244,12 +244,12 @@ tr:nth-child(even) {
   background: linear-gradient(
     -45deg,
     #ffffff 25%,
-    #A6B1F9 25%,
-    #A6B1F9 50%,
+    #86C8E6 25%,
+    #86C8E6 50%,
     #ffffff 50%,
     #ffffff 75%,
-    #A6B1F9 75%,
-    #A6B1F9
+    #86C8E6 75%,
+    #86C8E6
   );
 }
 

@@ -31,14 +31,14 @@
   </head>
   <body>
     <div class="background"></div>
-    <div class="nooverflow" id="searchnooverflow" style="float:right;">
+    <!-- <div class="nooverflow" id="searchnooverflow" style="float:right;">
       <div class="searchcontainer" id="searchcontainer">
         <img src="assets/searchicon.png", id="searchicon", style="width:20px; height:20px; float:right;"></>
         <form action="/search" id="searchbox">
           <input type="text" name="search" id="searchtextbox">
         </form>
       </div>
-    </div>
+    </div> -->
     <img src="assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
     <div class="homepagelinks" id="homepagelinks">
       <h1>JJCooley</h1>
@@ -90,7 +90,7 @@
 
     <script>
       $(function() {
-        if (mobile) { return }
+        if (mobile) { $("#detailcontainer").css('display', "none"); return }
 
         const detailButtons = ["election-map-button", "bussr-button", "betabot-button", "github-button"]
 

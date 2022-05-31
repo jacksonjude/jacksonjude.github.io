@@ -55,7 +55,7 @@
     </div>
 
     <div class="dog">
-      <a href="http://undertale.com" target="_blank" style="box-shadow:initial">
+      <a href="http://undertale.com" style="box-shadow:initial">
         <img src="assets/annoyingLeft.gif" style="width:62.5px;height:50px;" />
       </a>
     </div>
@@ -75,31 +75,75 @@
           <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Projects</h4>
         </div>
         <div style="display: flex; justify-content: center; align-items: center; font-size: 16px">
-          <img style="width: 40px; height: 40px" src="assets/election-map-icon.png" /><a href="https://map.jacksonjude.com"><div class="red-striped striped">Election Map</div></a>
+          <img style="width: 40px; height: 40px" src="assets/election-map-icon.png" /><a href="https://map.jacksonjude.com" id="election-map-button"><div class="red-striped striped">Election Map</div></a>
         </div>
         <div style="padding-top: 10px;"></div>
         <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
-          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/bussr-icon.png" /><a href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479"><div class="purple-striped striped">Bussr SF</div></a>
+          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/bussr-icon.png" /><a href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479" id="bussr-button"><div class="purple-striped striped">Bussr SF</div></a>
         </div>
         <div style="padding-top: 10px;"></div>
         <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
-          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/betabot-circle.png" /><a href="https://github.com/jacksonjude/BetaBot"><div class="blue-striped striped">BetaBot</div></a>
+          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/betabot-circle.png" /><a href="https://github.com/jacksonjude/BetaBot" id="betabot-button"><div class="blue-striped striped">BetaBot</div></a>
         </div>
       </div>
     </div>
+
+    <script>
+      $(function() {
+        if (mobile) { return }
+
+        const detailButtons = ["election-map-button", "bussr-button", "betabot-button", "github-button"]
+
+        detailButtons.forEach(buttonID => {
+          $("#" + buttonID).hover(() => {
+            displayDetailBox(buttonID)
+          }, () => {
+            dismissDetailBox()
+          })
+        })
+
+        function displayDetailBox(buttonID)
+        {
+          $("#detailcontainer").css('bottom', "-2%")
+
+          switch (buttonID)
+          {
+            case "election-map-button":
+            $("#detailboxtitle").html("USA Election Map")
+            $("#detailboxbody").html("An interactive USA presidential, senatorial, house, and governor election map. Includes past results (via MIT election lab) and projections (from FiveThirthyEight, Cook Political, LTE, and more). Built using <span style='color: #F1672E'>HTML</span>/<span style='color: #2FA9DD'>CSS</span>/<span style='color: #F2BF26'>JS</span>")
+            break
+
+            case "bussr-button":
+            $("#detailboxtitle").html("Bussr SF")
+            $("#detailboxbody").html("An iOS bus tracker app for the SFMTA & BART transit systems. Includes real-time predictions and vehicle locations. Built with <span style='color: #FE532D'>Swift</span>")
+            break
+
+            case "betabot-button":
+            $("#detailboxtitle").html("BetaBot")
+            $("#detailboxbody").html("A multi-purpose Discord bot. Includes role messages, server/dm polls, message utilities, and scheduled commands. Built with <span style='color: #5B65EE'>Discord.js</span>")
+            break
+          }
+        }
+
+        function dismissDetailBox()
+        {
+          $("#detailcontainer").css('bottom', "-25%")
+        }
+      })
+    </script>
 
     <div class="boxcontainer" id="socialcontainer" style="width:150px">
       <div class="box" style="height:190px;padding-left:0px;padding-right:0px">
         <div style="display: flex; justify-content: center; align-items: center;">
           <h4 style="margin: 10px; margin-bottom: 20px; font-size: 22px; text-decoration: underline">Socials</h4>
         </div>
-        <a href="https://github.com/jacksonjude" target="_blank" style="text-decoration: none;"><img src="assets/github.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
-        <a href="https://www.linkedin.com/in/jackson-cooley/" target="_blank" style="text-decoration: none;"><img src="assets/linkedin.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <a href="https://github.com/jacksonjude" style="text-decoration: none;"><img src="assets/github.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <a href="https://www.linkedin.com/in/jackson-cooley/" style="text-decoration: none;"><img src="assets/linkedin.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
         <br>
         <br>
         <br>
-        <a href="https://discord.com/users/275443748136157185" target="_blank" style="text-decoration: none;"><img src="assets/discord.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
-        <a href="https://instagram.com/jj.cooley" target="_blank" style="text-decoration: none;"><img src="assets/instagram.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <a href="https://discord.com/users/275443748136157185" style="text-decoration: none;"><img src="assets/discord.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        <a href="https://instagram.com/jj.cooley" style="text-decoration: none;"><img src="assets/instagram.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
       </div>
     </div>
 
@@ -111,6 +155,17 @@
         <font size="2px"><center><a href="/snake" style="text-decoration: none;">Snake Game</a></center></font>
         <font size="2px"><center><a href="/Minesweeper" style="text-decoration: none;">Minesweeper</a></center></font>
         <font size="2px"><center><a href="/hex" style="text-decoration: none;">Hex Converter</a></center></font>
+        <br>
+      </div>
+    </div>
+
+    <div class="boxcontainer" id="detailcontainer" style="position: absolute; bottom: -25%; left: 50%; margin-left: -375px; transition: bottom .5s;">
+      <div class="box" id="detailbox" style="max-width: 750px; width: 750px">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <h4 id="detailboxtitle" style="margin: 10px; margin-bottom: -10px; font-size: 22px; text-decoration: underline"></h4>
+        </div>
+        <h5 id="detailboxbody" style="text-align: center">
+        </h5>
         <br>
       </div>
     </div>

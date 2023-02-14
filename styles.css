@@ -84,7 +84,7 @@ html {
   background-color: #444444;*/
 
   background-color: #444444;
-  zoom: 125%;
+  zoom: 150%;
 }
 
 h1, h2, h3, h4, h5, a:link, a:visited, a:active, p, label {
@@ -162,14 +162,24 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+.title {
+  margin-top: 80px;
+  margin-left: 10px;
+}
+
+.homepageboxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 25px;
+  gap: 30px;
+}
+
 .homepagelinks {
-  float: left;
-  margin-top: 50px;
   margin-left: 10px;
 }
 
 .boxcontainer {
-  /*float: left;*/
   display: inline-block;
   padding-left: 20px;
   vertical-align: top;

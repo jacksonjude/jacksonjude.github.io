@@ -14,18 +14,35 @@
     div.dog {
       width: 62.5px;
       height: 50px;
-      position: relative;
-      animation: offScreen 20s infinite;
+      position: absolute;
+      animation: offScreen 30s infinite;
       animation-timing-function: linear;
+      margin-top: 25px;
     }
 
-    div.dog:hover {
+    /* div.dog:hover, div.vdog:hover {
       animation-play-state: paused;
-    }
+    } */
 
     @keyframes offScreen {
-      from {left: 200%}
-      to {left: -30%}
+      from {left: 200%;}
+      to {left: -300%;}
+    }
+    
+    div.vdog {
+      width: 62.5px;
+      height: 50px;
+      position: absolute;
+      animation: offScreenVertical 30s infinite 15s;
+      animation-timing-function: linear;
+      right: 3%;
+      top: 200%;
+      transform: rotate(-90deg) scaleX(-1);
+    }
+    
+    @keyframes offScreenVertical {
+      from {top: 200%;}
+      to {top: -300%;}
     }
     </style>
   </head>
@@ -40,18 +57,72 @@
       </div>
     </div> -->
     <img src="assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
-    <div class="homepagelinks" id="homepagelinks">
-      <h1>JJCooley</h1>
-      <h4>Programmer person<br>UCSB CS c/o 2024</h4>
-      <a href="coding">Coding</a>
-      <br>
-      <a href="photos">Photos</a>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+    <div class="title">
+      <h1 style="margin-bottom: 0">Jackson Cooley</h1>
+    </div>
+    <div class="homepageboxes">
+      <div class="homepagelinks" id="homepagelinks">
+        <h4 style="margin: 0">iOS and Web Dev<br>UCSB CS c/o 2024</h4>
+        <br>
+        <a href="coding">Coding Stuff</a>
+        <br>
+        <a href="photos">Photos</a>
+      </div>
+      <div class="boxcontainer" id="projectscontainer" style="width:200px;">
+        <div class="box" style="padding-left:0px; padding-right:0px; padding-bottom: 15px">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Projects</h4>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center; font-size: 16px">
+            <img style="width: 40px; height: 40px" src="assets/election-map-icon.png" /><a href="https://map.jacksonjude.com" id="election-map-button"><div class="red-striped striped">Election Map</div></a>
+          </div>
+          <div style="padding-top: 10px;"></div>
+          <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
+            <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/bussr-icon.png" /><a href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479" id="bussr-button"><div class="purple-striped striped">Bussr SF</div></a>
+          </div>
+          <div style="padding-top: 10px;"></div>
+          <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
+            <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/betabot-circle.png" /><a href="https://github.com/jacksonjude/BetaBot" id="betabot-button"><div class="blue-striped striped">BetaBot</div></a>
+          </div>
+        </div>
+      </div>
+      <div class="boxcontainer" id="socialcontainer" style="width:150px">
+        <div class="box" style="height:190px;padding-left:0px;padding-right:0px">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <h4 style="margin: 10px; margin-bottom: 20px; font-size: 22px; text-decoration: underline">Socials</h4>
+          </div>
+          <a href="https://github.com/jacksonjude" style="text-decoration: none;"><img src="assets/github.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+          <a href="https://www.linkedin.com/in/jackson-cooley/" style="text-decoration: none;"><img src="assets/linkedin.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+          <br>
+          <br>
+          <br>
+          <a href="https://discord.com/users/275443748136157185" style="text-decoration: none;"><img src="assets/discord.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+          <a href="https://instagram.com/jj.cooley" style="text-decoration: none;"><img src="assets/instagram.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
+        </div>
+      </div>
+      
+      <div class="boxcontainer" id="linkcontainer" style="width:150px">
+        <div class="box">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <h4 style="margin: 10px; margin-bottom: 15px; font-size: 22px; text-decoration: underline">Misc</h4>
+          </div>
+          <font size="2px"><center><a href="/snake" style="text-decoration: none;">Snake Game</a></center></font>
+          <font size="2px"><center><a href="/Minesweeper" style="text-decoration: none;">Minesweeper</a></center></font>
+          <font size="2px"><center><a href="/hex" style="text-decoration: none;">Hex Converter</a></center></font>
+          <br>
+        </div>
+      </div>
+      
+      <div class="boxcontainer" id="detailcontainer" style="position: absolute; bottom: -30%; left: 50%; margin-left: -375px; transition: bottom .5s; z-index: 2;">
+        <div class="box" id="detailbox" style="max-width: 750px; width: 750px">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <h4 id="detailboxtitle" style="margin: 10px; margin-bottom: -10px; font-size: 22px; text-decoration: underline"></h4>
+          </div>
+          <h5 id="detailboxbody" style="text-align: center">
+          </h5>
+          <br>
+        </div>
+      </div>
     </div>
 
     <div class="dog">
@@ -59,33 +130,38 @@
         <img src="assets/annoyingLeft.gif" style="width:62.5px;height:50px;" />
       </a>
     </div>
+    
+    <div class="vdog">
+      <a href="http://undertale.com" style="box-shadow:initial">
+        <img src="assets/annoyingLeft.gif" style="width:62.5px;height:50px;" />
+      </a>
+    </div>
+    
+    <script>
+      $(function() {
+        var pauseAnimation = () => {
+          $(".dog").css('animation-play-state', 'paused')
+          $(".vdog").css('animation-play-state', 'paused')
+        }
+        
+        var resumeAnimation = () => {
+          $(".dog").css('animation-play-state', 'unset')
+          $(".vdog").css('animation-play-state', 'unset')
+        }
+        
+        $(".dog").hover(() => {
+          pauseAnimation()
+        }, () => {
+          resumeAnimation()
+        }) 
+        
+        $(".dog").hover(pauseAnimation, resumeAnimation)
+        $(".vdog").hover(pauseAnimation, resumeAnimation)
+      })
+    </script>
 
     <div class="wingdings" id="wingdings">
       <font size="1px"><a href="http://grompe.org.ru/static/wingdings_gaster.html" style="text-decoration: none">🕈✋☠☝👎✋☠☝💧</a></font>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="boxcontainer" id="projectscontainer" style="width:200px;">
-      <div class="box" style="padding-left:0px; padding-right:0px; padding-bottom: 15px">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Projects</h4>
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center; font-size: 16px">
-          <img style="width: 40px; height: 40px" src="assets/election-map-icon.png" /><a href="https://map.jacksonjude.com" id="election-map-button"><div class="red-striped striped">Election Map</div></a>
-        </div>
-        <div style="padding-top: 10px;"></div>
-        <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
-          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/bussr-icon.png" /><a href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479" id="bussr-button"><div class="purple-striped striped">Bussr SF</div></a>
-        </div>
-        <div style="padding-top: 10px;"></div>
-        <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
-          <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/betabot-circle.png" /><a href="https://github.com/jacksonjude/BetaBot" id="betabot-button"><div class="blue-striped striped">BetaBot</div></a>
-        </div>
-      </div>
     </div>
 
     <script>
@@ -131,44 +207,6 @@
         }
       })
     </script>
-
-    <div class="boxcontainer" id="socialcontainer" style="width:150px">
-      <div class="box" style="height:190px;padding-left:0px;padding-right:0px">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <h4 style="margin: 10px; margin-bottom: 20px; font-size: 22px; text-decoration: underline">Socials</h4>
-        </div>
-        <a href="https://github.com/jacksonjude" style="text-decoration: none;"><img src="assets/github.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
-        <a href="https://www.linkedin.com/in/jackson-cooley/" style="text-decoration: none;"><img src="assets/linkedin.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
-        <br>
-        <br>
-        <br>
-        <a href="https://discord.com/users/275443748136157185" style="text-decoration: none;"><img src="assets/discord.png" style="float:left;padding-left:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
-        <a href="https://instagram.com/jj.cooley" style="text-decoration: none;"><img src="assets/instagram.png" style="float:right;padding-right:15px;padding-bottom:15px;width:50px;height:50px;" /></a>
-      </div>
-    </div>
-
-    <div class="boxcontainer" id="linkcontainer" style="width:150px">
-      <div class="box">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <h4 style="margin: 10px; margin-bottom: 15px; font-size: 22px; text-decoration: underline">Misc</h4>
-        </div>
-        <font size="2px"><center><a href="/snake" style="text-decoration: none;">Snake Game</a></center></font>
-        <font size="2px"><center><a href="/Minesweeper" style="text-decoration: none;">Minesweeper</a></center></font>
-        <font size="2px"><center><a href="/hex" style="text-decoration: none;">Hex Converter</a></center></font>
-        <br>
-      </div>
-    </div>
-
-    <div class="boxcontainer" id="detailcontainer" style="position: absolute; bottom: -30%; left: 50%; margin-left: -375px; transition: bottom .5s;">
-      <div class="box" id="detailbox" style="max-width: 750px; width: 750px">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <h4 id="detailboxtitle" style="margin: 10px; margin-bottom: -10px; font-size: 22px; text-decoration: underline"></h4>
-        </div>
-        <h5 id="detailboxbody" style="text-align: center">
-        </h5>
-        <br>
-      </div>
-    </div>
 
     <script>
       var isSmall = false

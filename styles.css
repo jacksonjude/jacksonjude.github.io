@@ -200,6 +200,73 @@ tr:nth-child(even) {
   font-family: "Symbola"
 }
 
+.project-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+  gap: 5%;
+  
+  height: 330px;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  
+  height: 100%;
+}
+
+.project-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  
+  gap: 8px;
+}
+
+.project-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.project-info-container {
+  flex: 1 0;
+  height: 100%;
+  max-width: 460px;
+  min-width: 315px;
+  
+  padding: unset !important;
+}
+
+.project-info {
+  width: 100%;
+  height: calc(100% - 40px);
+  
+  max-width: unset !important;
+  padding-left: unset;
+  padding-right: unset;
+  padding-top: 20px;
+  padding-bottom: 20px
+}
+
+.project-info-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  
+  height: 100%;
+  
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 #searchbox {
   position: absolute;
   float:right;

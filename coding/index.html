@@ -3,53 +3,190 @@
   <head>
     <link rel="stylesheet" href="/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
     <title>JJCooley - Coding</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    <script src="https://jacksonjude.github.io/SpinningCircle/processing.js"></script>
+    <script src="/jquery-3.2.1.min.js"></script>
   </head>
   <body>
     <div class="background"></div>
     <img src="/assets/favicon.ico" style="width:50px;height:50px;">
-    <h1>Coding Stuff</h1>
-    <h4>Some random things I coded</h4>
-    <br>
-    <canvas id="SpinningCircle" data-processing-sources="https://jacksonjude.com/SpinningCircle/SpinningCircle.pde" width="100" height="100" style="float:right; display:inline;">
-    </canvas>
-    <br>
-    <a href="/hex">Hex Converter</a>
-    <br>
-    <a href="/cc">Caesar Cipher</a>
-    <br>
-    <a href="/pke">Key Pair Encryption</a>
-    <br>
-    <br>
-    <a href="https://map.jacksonjude.com">USA Election Map</a>
-    <br>
-    <br>
-    <a href="/snake">Snake Game</a>
-    <br>
-    <a href="/clife">Conway's Game</a>
-    <br>
-    <a href="/clicker">Clicker Game</a>
-    <br>
-    <br>
-    <a href="apcs">APCS Projects</a>
-    <br>
-    <br>
-    <a href="projects">Downloads</a>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <a href="..">Back</a>
-    <div class="wingdings" id="wingdings">
-      <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">👍⚐👎✋☠☝ ✌☠👎 💧❄🕆☞☞</a></font>
+    <div style="margin-left: 10px; margin-right: 10px">
+      <h1>Projects</h1>
+      <h4>A (somewhat) complete list of my projects & positions</h4>
+      <div class="project-container">
+        <div class="project-list">
+          <div class="project-item"><img class="project-icon" /><a id="gogaucho" data-lang="swift" href="https://ucsb.app">Lead iOS Dev (GoGaucho) – [Dec. 2022 - Present]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="sbcreativelab" data-lang="react" href="https://sbcreativelab.com">Lead Web Dev (SBCreativeLab) – [Sep. 2022 - Present]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="cloudkit_flutter" data-lang="dart,sqlite" href="https://github.com/jacksonjude/cloudkit_flutter">cloudkit_flutter – [Jun. 2021 - Present]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="election-map" data-lang="html,css,js" href="https://map.jacksonjude.com">USA Election Map – [Oct. 2020 - Present]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="betabot" data-lang="typescript" href="https://github.com/jacksonjude/BetaBot">BetaBot – [Jun. 2020 - Present]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="bussr" data-lang="swift,nodejs" href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479">Bussr SF – [Jun. 2018 - Present]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="apesl" data-lang="nodejs,postgresql" href>AP Exam Student Lookup – [Mar. 2019 - Apr. 2019]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="apcs" data-lang="java" href="./apcs">APCS Projects – [2018 – 2019]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="random" data-lang="html,css,js" href="./random">Mini Web Projects – [2018 – 2019]</a></div>
+          <div class="project-item"><img class="project-icon" /><a id="lowell-schedule" data-lang="swift" href="https://github.com/jacksonjude/BellSchedule">Lowell Schedule – [Oct. 2017 - May 2020]</a></div>
+        </div>
+        <div class="project-info-container boxcontainer">
+          <div class="project-info box">
+            <div class="project-info-content">
+              <h4 style="color: gray; margin: auto">👈 Hover a project</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>
+        #detailboxtitle, #detailboxbody, #detailboxfooter {
+          margin: 0;
+        }
+        
+        .lang-swift {
+          color: #FE532D;
+        }
+        
+        .lang-html {
+          color: #F1672E;
+        }
+        
+        .lang-css {
+          color: #2FA9DD;
+        }
+        
+        .lang-js {
+          color: #F2BF26;
+        }
+        
+        .lang-typescript {
+          color: #5b99ee;
+        }
+        
+        .lang-dart {
+          color: #5bc2f0;
+        }
+        
+        .lang-sqlite, .lang-postgresql {
+          color: #3b91d5;
+        }
+        
+        .lang-react {
+          color: #62dafb;
+        }
+        
+        .lang-nodejs {
+          color: #63b602;
+        }
+        
+        .lang-java {
+          color: #f1931c;
+        }
+      </style>
+      <script>
+        $(function() {
+        //   if (mobile) { $("#detailcontainer").css('display', "none"); return }
+        
+          const langMap = {
+            "swift": "Swift",
+            "html": "HTML",
+            "css": "CSS",
+            "js": "JS",
+            "typescript": "TypeScript",
+            "dart": "Dart",
+            "sqlite": "SQLite",
+            "postgresql": "PostgreSQL",
+            "react": "React.js",
+            "nodejs": "Node.js",
+            "java": "Java"
+          }
+          
+          $(".project-list > div > a").each((i, element) => {
+            let projectID = $(element).attr('id')
+            
+            $(element).hover(() => {
+              displayDetailBox(projectID, element)
+            })
+            
+            $(element).parent().children("img").attr('src', '/assets/projects/' + projectID + ".png")
+          })
+        
+          function displayDetailBox(projectID, div)
+          {
+            if (projectID == null) return
+            $(".project-info-content").empty()
+            $(".project-info-content").append("<h3 id='detailboxtitle' /><h4 id='detailboxbody' /><h4 id='detailboxfooter' />")
+            switch (projectID)
+            {
+              case "gogaucho":
+              $("#detailboxtitle").html("GoGaucho")
+              $("#detailboxbody").html("Restarted development of the iOS app, which provides campus maps, dining hall menus, and course schedules to UCSB students.")
+              break
+              
+              case "sbcreativelab":
+              $("#detailboxtitle").html("SBCreativeLab")
+              $("#detailboxbody").html("Collaborated with the design team to develop the 2023 Winter Design Fest website, and maintained the main club website throughout the year.")
+              break
+              
+              case "cloudkit_flutter":
+              $("#detailboxtitle").html("cloudkit_flutter")
+              $("#detailboxbody").html("A Fluter package for CloudKit fetch, modify, and sync via CloudKit Web Services. Uses annotated model classes for automatic JSON conversions and supports responsive database updates.")
+              break
+              
+              case "election-map":
+              $("#detailboxtitle").html("USA Election Map")
+              $("#detailboxbody").html("An interactive USA presidential, senatorial, house, and governor election map. Includes past results (via MIT election lab) and projections (from FiveThirthyEight, Cook Political, LTE, and more).")
+              break
+              
+              case "betabot":
+              $("#detailboxtitle").html("BetaBot")
+              $("#detailboxbody").html("A multi-purpose Discord bot. Includes role messages, server/dm polls, message utilities, and scheduled commands.")
+              break
+              
+              case "bussr":
+              $("#detailboxtitle").html("Bussr SF")
+              $("#detailboxbody").html("An iOS bus tracker app for the SFMTA & BART transit systems. Includes real-time predictions, vehicle locations, and support for scheduled notifications.")
+              break
+              
+              case "apesl":
+              $("#detailboxtitle").html("AP Exam Student Lookup")
+              $("#detailboxbody").html("Matched exam times with student schedules in an SQL database to excuse absenses due to AP exams, in collaboration with high school admin.")
+              break
+              
+              case "apcs":
+              $("#detailboxtitle").html("APCS Projects")
+              $("#detailboxbody").html("A variety of projects created in Processing for AP Computer Science, including the visual projects Ripple and SpinningCircle, and the games Asteroids and Minesweeper.")
+              break
+              
+              case "random":
+              $("#detailboxtitle").html("Mini Web Projects")
+              $("#detailboxbody").html("A variety of small web projects created in JavaScript, including versions of Snake and Conway's Game of Life.")
+              break
+              
+              case "lowell-schedule":
+              $("#detailboxtitle").html("Lowell Schedule")
+              $("#detailboxbody").html("An iOS app to fetch high school bell schedules for different days of the week. Includes automatic cloud syncing for student schedules, and customizable push notifications.")
+              break
+            }
+            
+            let languges = $(div).attr('data-lang').split(',')
+            let langString = "Built with "
+            for (let i in languges)
+            {
+              if (i > 0) langString += ", "
+              
+              langString += "<span class='lang-" + languges[i] + "'>" + langMap[languges[i]] + "</span>"
+            }
+            $("#detailboxfooter").html(langString)
+          }
+        })
+      </script>
+      <br>
+      <a href="..">Back</a>
+      <div class="wingdings" id="wingdings">
+        <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">👍⚐👎✋☠☝ ✌☠👎 💧❄🕆☞☞</a></font>
+      </div>
+      <br>
+      <br>
+      <h4>innnnooovatiions</h4>
     </div>
-    <br>
-    <br>
-    <h4>innnnooovatiions</h4>
   </body>
 </html>

@@ -46,26 +46,13 @@
   <body style="background-color: unset">
     <div class="background"></div>
     <img src="assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
-    <div class="title">
-      <h1 style="margin-bottom: 0">Jackson Cooley</h1>
+    <div class="center-title">
+      <h1 style="margin: 0">Jackson Cooley</h1>
+      <h4 style="margin: 0; text-align: center">iOS<img style="padding-left: 4px; width: 16px; height: 16px" src="assets/projects/swift.png" /> & Web<img style="padding-left: 4px; width: 16px; height: 16px" src="assets/projects/js.png" /> Developer<br>🎓 UCSB CS c/o 2024</h4>
     </div>
     <div class="homepageboxes">
-      <div class="homepagelinks" id="homepagelinks">
-        <h4 style="margin: 0">iOS & Web Developer<br>UCSB CS c/o 2024</h4>
-        <br>
-        <a href="coding">All Projects</a>
-        <br>
-        <br>
-        <a href="coding/random">Misc Sites (JS)</a>
-        <br>
-        <a href="coding/apcs">APCS Sites (Java)</a>
-        <!-- <br>
-        <a href="photos">Photos</a> -->
-        <!-- <br>
-        <a href="about">About Me</a> -->
-      </div>
-      <div class="boxcontainer" id="projectscontainer" style="width:200px;">
-        <div class="box" style="padding-left:0px; padding-right:0px; padding-bottom: 15px">
+      <div class="boxcontainer" id="projectscontainer">
+        <div class="box" style="padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center">
           <div style="display: flex; justify-content: center; align-items: center;">
             <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Featured</h4>
           </div>
@@ -86,8 +73,21 @@
           </div>
         </div>
       </div>
+      <div class="boxcontainer" id="projectscontainer">
+        <div class="box" id="homepagelinks" style="padding: 15px; padding-top: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 4px; text-align: center;">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <h4 style="margin: 0px; margin-bottom: 8px; font-size: 22px; text-decoration: underline">Sitemap</h4>
+          </div>
+          <div><a href="coding">All Projects</a></div>
+          <div style="margin-bottom: 8px;"></div>
+          <div><a href="coding/random">Misc Sites<img style="padding-left: 8px; width: 16px; height: 16px" src="assets/projects/js.png" /></a></div>
+          <div><a href="coding/apcs">APCS Sites<img style="padding-left: 8px; width: 16px; height: 16px" src="assets/projects/java.png" /></a></div>
+          <div style="margin-bottom: 8px;"></div>
+          <div><a href="photos">Photos</a></div>
+        </div>
+      </div>
       <div class="boxcontainer" id="socialcontainer" style="width:150px">
-        <div class="box" style="height:190px;padding-left:0px;padding-right:0px">
+        <div class="box" style="height: 190px; padding-left: 0px; padding-right: 0px">
           <div style="display: flex; justify-content: center; align-items: center;">
             <h4 style="margin: 10px; margin-bottom: 20px; font-size: 22px; text-decoration: underline">Socials</h4>
           </div>
@@ -101,15 +101,15 @@
         </div>
       </div>
       
-      <div class="boxcontainer" id="linkcontainer" style="width:150px">
-        <div class="box">
+      <div class="boxcontainer" id="linkcontainer">
+        <div class="box" style="padding: 15px; padding-top: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 4px; text-align: center; font-size: 14px;">
           <div style="display: flex; justify-content: center; align-items: center;">
-            <h4 style="margin: 10px; margin-bottom: 15px; font-size: 22px; text-decoration: underline">Misc</h4>
+            <h4 style="margin: 0; font-size: 22px; text-decoration: underline">Misc</h4>
           </div>
-          <font size="2px"><center><a href="/snake" style="text-decoration: none;">Snake Game</a></center></font>
-          <font size="2px"><center><a href="/Minesweeper" style="text-decoration: none;">Minesweeper</a></center></font>
-          <font size="2px"><center><a href="/hex" style="text-decoration: none;">Hex Converter</a></center></font>
-          <br>
+          <div style="margin-bottom: 8px;"></div>
+          <div><a href="/snake" style="text-decoration: none;">Snake Game</a></div>
+          <div><a href="/Minesweeper" style="text-decoration: none;">Minesweeper</a></div>
+          <div><a href="/hex" style="text-decoration: none;">Hex Converter</a></div>
         </div>
       </div>
       

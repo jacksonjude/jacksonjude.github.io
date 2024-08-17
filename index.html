@@ -50,9 +50,14 @@
     </div>
     <div class="homepageboxes">
       <div class="homepagelinks" id="homepagelinks">
-        <h4 style="margin: 0">iOS and Web Dev<br>UCSB CS c/o 2024</h4>
+        <h4 style="margin: 0">iOS & Web Developer<br>UCSB CS c/o 2024</h4>
         <br>
-        <a href="coding">Project List</a>
+        <a href="coding">All Projects</a>
+        <br>
+        <br>
+        <a href="coding/random">Misc Sites (JS)</a>
+        <br>
+        <a href="coding/apcs">APCS Sites (Java)</a>
         <!-- <br>
         <a href="photos">Photos</a> -->
         <!-- <br>
@@ -61,7 +66,7 @@
       <div class="boxcontainer" id="projectscontainer" style="width:200px;">
         <div class="box" style="padding-left:0px; padding-right:0px; padding-bottom: 15px">
           <div style="display: flex; justify-content: center; align-items: center;">
-            <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Projects</h4>
+            <h4 style="margin: 10px; font-size: 22px; text-decoration: underline">Featured</h4>
           </div>
           <div style="display: flex; justify-content: center; align-items: center; font-size: 16px">
             <img style="width: 40px; height: 40px" src="assets/election-map-icon.png" /><a href="https://map.jacksonjude.com" id="election-map-button"><div class="red-striped striped">Election Map</div></a>
@@ -73,6 +78,10 @@
           <div style="padding-top: 10px;"></div>
           <div style="display: flex; justify-content: center; align-items: center; font-size: 18px">
             <img style="width: 40px; height: 40px; border-radius: 8px; margin-right: 10px;" src="assets/betabot-circle.png" /><a href="https://github.com/jacksonjude/BetaBot" id="betabot-button"><div class="blue-striped striped">BetaBot</div></a>
+          </div>
+          <div style="padding-top: 16px;"></div>
+          <div style="display: flex; justify-content: center; align-items: center; font-size: 14px">
+            <a href="./coding">Other Projects</a>
           </div>
         </div>
       </div>
@@ -237,6 +246,42 @@
       {
         document.body.zoom = "100%"
         $("html").css("overflow", "")
+      }
+      
+      let originalTop = null
+      let originalLeft = null
+      
+      let originalMouseX = null
+      let originalMouseY = null
+      
+      let offsetFactor = 5
+      
+      document.onmousemove = handleMouseMove
+      function handleMouseMove(event) {
+        let mouseX = event.pageX
+        let mouseY = event.pageY
+        
+        if (!originalMouseX) {
+          originalMouseX = mouseX
+        }
+        if (!originalMouseY) {
+          originalMouseY = mouseY
+        }
+        
+        let width = $(window).width()
+        let height = $(window).height()
+        
+        if (!originalTop) {
+          originalTop = parseFloat($(".background").css('top').replace('px', ''))
+        }
+        if (!originalLeft) {
+          originalLeft = parseFloat($(".background").css('left').replace('px', ''))
+        }
+        
+        console.log(5*(mouseY - height)/height)
+        
+        $(".background").css('top', (originalTop - (originalTop*offsetFactor/100*(mouseY - originalMouseY)/height)) + "px")
+        $(".background").css('left', (originalLeft - (originalLeft*offsetFactor/100*(mouseX - originalMouseX)/width)) + "px")
       }
 
       function checkForSmallScreen(withEvent)

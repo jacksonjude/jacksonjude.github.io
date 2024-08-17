@@ -4,29 +4,36 @@
     <link rel="stylesheet" href="/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta charset="utf-8">
-    <title>JJCooley - Coding</title>
+    <title>JJCooley - Projects</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <script src="/jquery-3.2.1.min.js"></script>
   </head>
   <body>
     <div class="background"></div>
-    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
+    <a href='../' style="box-shadow: none; top: 8px; position: absolute;"><img src="/assets/favicon.ico" style="width:50px;height:50px;"></a>
     <div style="margin-left: 10px; margin-right: 10px">
-      <h1>Projects</h1>
-      <h4>A (somewhat) complete list of my projects & positions</h4>
+      <div class="center-title">
+        <h1 style="margin: 0px">Projects</h1>
+        <h4 style="margin: 0px">A (somewhat) complete list of my projects & positions</h4>
+      </div>
       <div class="project-container">
-        <div class="project-list">
-          <div class="project-item"><img class="project-icon" /><a id="gogaucho" data-lang="swift" href="https://ucsb.app">Lead iOS Dev (GoGaucho) – [Dec. 2022 - Present]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="sbcreativelab" data-lang="react" href="https://sbcreativelab.com">Lead Web Dev (SBCreativeLab) – [Sep. 2022 - Present]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="cloudkit_flutter" data-lang="dart,sqlite" href="https://github.com/jacksonjude/cloudkit_flutter">cloudkit_flutter – [Jun. 2021 - Present]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="election-map" data-lang="html,css,js" href="https://map.jacksonjude.com">USA Election Map – [Oct. 2020 - Present]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="betabot" data-lang="typescript" href="https://github.com/jacksonjude/BetaBot">BetaBot – [Jun. 2020 - Present]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="bussr" data-lang="swift,nodejs" href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479">Bussr SF – [Jun. 2018 - Present]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="apesl" data-lang="nodejs,postgresql" href>AP Exam Student Lookup – [Mar. 2019 - Apr. 2019]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="apcs" data-lang="java" href="./apcs">APCS Projects – [2018 – 2019]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="random" data-lang="html,css,js" href="./random">Mini Web Projects – [2018 – 2019]</a></div>
-          <div class="project-item"><img class="project-icon" /><a id="lowell-schedule" data-lang="swift" href="https://github.com/jacksonjude/BellSchedule">Lowell Schedule – [Oct. 2017 - May 2020]</a></div>
+        <div class="project-list-container boxcontainer">
+          <div class="project-list box">
+            <div class="project-item"><img class="project-icon" /><a id="nasa" data-lang="js,java" data-date="Jun. 2023 - Dec. 2023" href="https://celestialmappingsystem.arc.nasa.gov">Software Dev Intern (NASA)</a></div>
+            <div class="project-item"><img class="project-icon" /><a id="embereye" data-lang="swift,swiftui,nodejs" data-date="Jan. 2024 - Jun. 2024" href="https://celestialmappingsystem.arc.nasa.gov">Lead iOS Dev (FLIR)</a></div>
+            <div class="project-item"><img class="project-icon" /><a id="gogaucho" data-lang="swift,uikit" data-date="Dec. 2022 - Jun. 2024" href="https://apps.apple.com/us/app/gogaucho/id6449792730">Lead iOS Dev (GoGaucho)</a></div>
+            <div class="project-item"><img class="project-icon" /><a id="sbcreativelab" data-lang="react" data-date="Sep. 2022 - Jun. 2024" href="https://sbcreativelab.com">Lead Web Dev (SBCreativeLab)</a></div>
+            <div class="project-seperator"></div>
+            <div class="project-item"><img class="project-icon" /><a id="election-map" data-lang="html,css,js" data-date="Oct. 2020 - Present" href="https://map.jacksonjude.com">USA Election Map</a></div>
+            <div class="project-item"><img class="project-icon" /><a id="cloudkit_flutter" data-lang="dart,sqlite" data-date="Jun. 2021 - Sep. 2022" href="https://github.com/jacksonjude/cloudkit_flutter">cloudkit_flutter</a></div>
+            <div class="project-item"><img class="project-icon" /><a id="betabot" data-lang="typescript" data-date="Jun. 2020 - Sep. 2022" href="https://github.com/jacksonjude/BetaBot">BetaBot</a></div>
+            <div class="project-item"><img class="project-icon" /><a id="bussr" data-lang="swift,uikit,nodejs" data-date="Jun. 2018 - Oct. 2021" href="https://apps.apple.com/us/app/bussr-sf-bus-tracker/id1579219479">Bussr SF</a></div>
+            <!-- <div class="project-item"><img class="project-icon" /><a id="apesl" data-lang="nodejs,postgresql" data-date="Mar. 2019 - Apr. 2019" href>AP Exam Student Lookup</a></div> -->
+            <!-- <div class="project-item"><img class="project-icon" /><a id="apcs" data-lang="java" data-date="2018 – 2019" href="./apcs">APCS Projects</a></div> -->
+            <!-- <div class="project-item"><img class="project-icon" /><a id="random" data-lang="html,css,js" data-date="2018 – 2019" href="./random">Mini Web Projects</a></div> -->
+            <div class="project-item"><img class="project-icon" /><a id="lowell-schedule" data-lang="swift,uikit" data-date="Oct. 2017 - May 2020" href="https://github.com/jacksonjude/BellSchedule">Lowell Schedule</a></div>
+          </div>
         </div>
         <div class="project-info-container boxcontainer">
           <div class="project-info box">
@@ -80,6 +87,14 @@
         .lang-java {
           color: #f1931c;
         }
+        
+        .lang-uikit {
+          color: #55BAF5;
+        }
+        
+        .lang-swiftui {
+          color: #0074ff;
+        }
       </style>
       <script>
         $(function() {
@@ -96,7 +111,9 @@
             "postgresql": "PostgreSQL",
             "react": "React.js",
             "nodejs": "Node.js",
-            "java": "Java"
+            "java": "Java",
+            "uikit": "UIKit",
+            "swiftui": "SwiftUI"
           }
           
           $(".project-list > div > a").each((i, element) => {
@@ -106,7 +123,19 @@
               displayDetailBox(projectID, element)
             })
             
-            $(element).parent().children("img").attr('src', '/assets/projects/' + projectID + ".png")
+            $(element).parent().children("img").attr('src', '/assets/projects/' + projectID + '.png')
+            
+            console.log($(element).parent().attr('data-lang'))
+            
+            let languages = $(element).parent().children("a").attr('data-lang').split(',')
+            for (let i in languages)
+            {
+              // if (i > 0)
+              // {
+              //   $(element).parent().append('/')
+              // }
+              $(element).parent().append(`<img class="project-icon" src=${'/assets/projects/' + languages[i] + '.png'}/>`)
+            }
           })
         
           function displayDetailBox(projectID, div)
@@ -116,9 +145,19 @@
             $(".project-info-content").append("<h3 id='detailboxtitle' /><h4 id='detailboxbody' /><h4 id='detailboxfooter' />")
             switch (projectID)
             {
+              case "nasa":
+              $("#detailboxtitle").html("Celestial Mapping System")
+              $("#detailboxbody").html("Ported the Java lunar map viewer to a JavaScript web app using Bootstrap and WebWorldWind.")
+              break
+              
+              case "embereye":
+              $("#detailboxtitle").html("EmberEye")
+              $("#detailboxbody").html("Collaborated with FLIR to create an iOS app which alerts users of kitchen stove fires using a mounted thermal camera.")
+              break
+              
               case "gogaucho":
               $("#detailboxtitle").html("GoGaucho")
-              $("#detailboxbody").html("Restarted development of the iOS app, which provides campus maps, dining hall menus, and course schedules to UCSB students.")
+              $("#detailboxbody").html("Revived development of the iOS app, which provides campus maps, dining hall menus, and course schedules to UCSB students.")
               break
               
               case "sbcreativelab":
@@ -128,12 +167,12 @@
               
               case "cloudkit_flutter":
               $("#detailboxtitle").html("cloudkit_flutter")
-              $("#detailboxbody").html("A Fluter package for CloudKit fetch, modify, and sync via CloudKit Web Services. Uses annotated model classes for automatic JSON conversions and supports responsive database updates.")
+              $("#detailboxbody").html("A Fluter package for CloudKit fetch, modify, and sync. Uses annotated model classes for automatic JSON conversions and supports responsive database updates.")
               break
               
               case "election-map":
               $("#detailboxtitle").html("USA Election Map")
-              $("#detailboxbody").html("An interactive USA presidential, senatorial, house, and governor election map. Includes past results (via MIT election lab) and projections (from FiveThirthyEight, Cook Political, LTE, and more).")
+              $("#detailboxbody").html("An interactive US election map. Includes election results (via MIT election lab) and projections (from 538, Cook Political, and more).")
               break
               
               case "betabot":
@@ -143,7 +182,7 @@
               
               case "bussr":
               $("#detailboxtitle").html("Bussr SF")
-              $("#detailboxbody").html("An iOS bus tracker app for the SFMTA & BART transit systems. Includes real-time predictions, vehicle locations, and support for scheduled notifications.")
+              $("#detailboxbody").html("An iOS bus tracker app for the SFMTA & BART transit systems. Includes real-time predictions, vehicle locations, and notifications.")
               break
               
               case "apesl":
@@ -163,9 +202,12 @@
               
               case "lowell-schedule":
               $("#detailboxtitle").html("Lowell Schedule")
-              $("#detailboxbody").html("An iOS app to fetch high school bell schedules for different days of the week. Includes automatic cloud syncing for student schedules, and customizable push notifications.")
+              $("#detailboxbody").html("An iOS app to show high school schedules for different days of the week. Includes auto cloud syncing of student schedules and push notifications.")
               break
             }
+            
+            let date = $(div).attr('data-date')
+            $("#detailboxtitle").append(`<br><span style='font-size: 12px'>${date}</span>`)
             
             let languges = $(div).attr('data-lang').split(',')
             let langString = "Built with "
@@ -180,10 +222,11 @@
         })
       </script>
       <br>
-      <a href="..">Back</a>
       <div class="wingdings" id="wingdings">
         <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">👍⚐👎✋☠☝ ✌☠👎 💧❄🕆☞☞</a></font>
       </div>
+      <br>
+      <br>
       <br>
       <br>
       <h4>innnnooovatiions</h4>

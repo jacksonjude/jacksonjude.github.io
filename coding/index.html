@@ -126,8 +126,6 @@
             
             $(element).parent().children("img").attr('src', '/assets/projects/' + projectID + '.png')
             
-            console.log($(element).parent().attr('data-lang'))
-            
             let languages = $(element).parent().children("a").attr('data-lang').split(',')
             for (let i in languages)
             {
@@ -135,7 +133,7 @@
               // {
               //   $(element).parent().append('/')
               // }
-              $(element).parent().append(`<img class="project-icon" src=${'/assets/projects/' + languages[i] + '.png'}/>`)
+              $(element).parent().append(`<img class="project-icon" src="${'/assets/projects/' + languages[i] + '.png'}"/>`)
             }
           })
         

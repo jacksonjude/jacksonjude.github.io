@@ -177,7 +177,7 @@ tr:nth-child(even) {
   flex-direction: row;
   justify-content: center;
   margin-top: 25px;
-  gap: 2%;
+  gap: 4%;
 }
 
 .homepagelinks {
@@ -186,7 +186,6 @@ tr:nth-child(even) {
 
 .boxcontainer {
   display: inline-block;
-  padding-left: 20px;
   vertical-align: top;
 }
 

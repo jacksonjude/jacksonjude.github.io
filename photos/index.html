@@ -45,12 +45,26 @@
         
         z-index: 2;
       }
+      
+      #focus-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+        
+        position: absolute;
+        padding-left: 5vh;
+        padding-right: 3vh;
+        
+        z-index: 2;
+      }
     </style>
   </head>
   <body>
     <div class="background"></div>
     <img src="/assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
-    <div class="center-title" style="margin-top: 4vh; margin-bottom: 4vh">
+    <div class="center-title" style="margin-top: 4vh; margin-bottom: 0">
       <h1 style="margin: 0">Photo Gallery</h1>
       <h4 style="margin: 0; text-align: center">👇 Click to view details</h4>
     </div>
@@ -58,30 +72,32 @@
     </div>
     <div class="focus-background"></div>
     <img id="focus-item" style="" />
+    <h4 id="focus-details" style="margin: 0">
+    </h4>
     <div class="wingdings" id="wingdings">
       <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">🏱☟⚐❄⚐💧</a></font>
     </div>
     <script>
       const displayPhotos = [
-        {filename: 'IMG_0500.jpg', location: 'San Francisco, CA', date: '2017', camera: 'Canon PowerShot G10'},
-        {filename: 'IMG_0410.jpg', location: 'San Francisco, CA', date: '2017', camera: 'Canon PowerShot G10'},
-        {filename: 'IMG_0320.jpg', location: 'San Francisco, CA', date: '2017', camera: 'Canon PowerShot G10'},
-        // {filename: 'IMG_4574.jpg', location: 'Santa Barbara, CA', date: '2023', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_0500.jpg', location: 'San Francisco', date: '2017', camera: 'Canon PowerShot G10'},
+        {filename: 'IMG_0410.jpg', location: 'San Francisco', date: '2017', camera: 'Canon PowerShot G10'},
+        {filename: 'IMG_0320.jpg', location: 'San Francisco', date: '2017', camera: 'Canon PowerShot G10'},
+        // {filename: 'IMG_4574.jpg', location: 'Santa Barbara', date: '2023', camera: 'iPhone 13 Pro'},
         {filename: 'IMG_3600.jpg', location: 'Madrid, Spain', date: '2022', camera: 'iPhone 11 Pro'},
-        {filename: 'IMG_4599.jpg', location: 'Santa Barbara, CA', date: '2023', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_4599.jpg', location: 'Santa Barbara', date: '2023', camera: 'iPhone 13 Pro'},
         // {filename: 'IMG_5650.jpg', location: 'Switzerland', date: '2024', camera: 'iPhone 13 Pro'},
-        // {filename: 'IMG_6297.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 13 Pro'},
-        {filename: 'IMG_6344.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 13 Pro'},
-        {filename: 'IMG_6372.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 13 Pro'},
-        {filename: 'IMG_6462.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 15 Pro'},
-        {filename: 'IMG_6498.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 15 Pro'},
+        // {filename: 'IMG_6297.jpg', location: 'San Francisco', date: '2024', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_6344.jpg', location: 'San Francisco', date: '2024', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_6372.jpg', location: 'San Francisco', date: '2024', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_6462.jpg', location: 'San Francisco', date: '2024', camera: 'iPhone 15 Pro'},
+        {filename: 'IMG_6498.jpg', location: 'San Francisco', date: '2024', camera: 'iPhone 15 Pro'},
       ].reverse()
       
       const zoomPercentage = 0.90
       const htmlZoomFactor = 1.5
       
-      for (photoData of displayPhotos) {
-        $('.gallery-container').append(`<img class="photo-item" src="/photos/display/${photoData.filename}" />`)
+      for (index in displayPhotos) {
+        $('.gallery-container').append(`<img class="photo-item" src="/photos/display/${displayPhotos[index].filename}" data-index="${index}" />`)
       }
       
       let hoverDiv = null
@@ -138,6 +154,7 @@
       
       function setFocusPosition(originalDiv = hoverDiv, isZoomingOut = false) {
         const focusDiv = $('#focus-item')
+        const focusDetails = $('#focus-details')
         
         if (!originalDiv) { return }
         
@@ -151,21 +168,19 @@
           }
           
           animationDepth += 1
-          
           focusDiv.animate({
             'top': $(originalDiv).position().top-3,
             'left': $(originalDiv).position().left-3,
             'width': $(originalDiv).width(),
             'height': $(originalDiv).height()
           }, 300/(animationDepth/4+1), null, () => {
+            animationDepth -= 1
+            animationState = animationDepth > 0 ? animationState : null
+            
             if (isZoomed) { return }
             
             $(originalDiv).css('opacity', 1)
-            $(focusDiv)
-              .attr('src', '')
-            
-            animationDepth -= 1
-            animationState = animationDepth > 0 ? animationState : null
+            $(focusDiv).attr('src', '')
             
             if (newHoverDiv && newHoverDiv != hoverDiv) {
               hoverDiv = newHoverDiv
@@ -178,28 +193,57 @@
             }
           })
           
+          animationDepth += 1
           $('.focus-background').animate({
             'opacity': '0'
-          }, 300/(animationDepth/4+1))
+          }, 300/(animationDepth/4+1), () => {
+            animationDepth -= 1
+          })
+          
+          animationDepth += 1
+          focusDetails.animate({
+            opacity: 0
+          }, 100, null, () => {
+            animationDepth -= 1
+          })
         } else {
           $(originalDiv).css('opacity', 0)
           
-          focusDiv
-            .attr('src', $(originalDiv).attr('src'))
+          const photoData = displayPhotos[$(originalDiv).data('index')]
+          
+          focusDiv.attr('src', $(originalDiv).attr('src'))
+          focusDetails.html(`<div>${photoData.date}</div>
+          <div>${photoData.location}</div>
+          <div>${photoData.camera}</div>
+          `)
           
           const newWidthPercentageOfHeight = focusDiv.width()/focusDiv.height()*zoomPercentage
+          const newTop = ($(document).scrollTop()+(1-zoomPercentage)/2*$(window).height())
+          const newWidth = $(window).height()*newWidthPercentageOfHeight
           
-          animationDepth += 2
-          
+          animationDepth += 1
           focusDiv.animate({
-            'top': ($(document).scrollTop()+(1-zoomPercentage)/2*$(window).height())/htmlZoomFactor,
-            'left': ($(window).width()-$(window).height()*newWidthPercentageOfHeight)/2/htmlZoomFactor,
+            'top': newTop/htmlZoomFactor,
+            'left': ($(window).width()-newWidth)/2/htmlZoomFactor,
             'width': `${newWidthPercentageOfHeight*100}vh`,
             'height': `${zoomPercentage*100}vh`
           }, 300, null, () => {
             animationDepth -= 1
+            
+            focusDetails.find('div').css({
+              'opacity': 0
+            })
+            
+            focusDetails.css({
+              'top': newTop/htmlZoomFactor,
+              'left': (($(window).width()-newWidth)/2+newWidth)/htmlZoomFactor,
+              'opacity': 1
+            })
+            
+            animateChildrenSeq('#focus-details > div', {'opacity': 1}, 200)
           })
           
+          animationDepth += 1
           $('.focus-background').animate({
             'opacity': '1'
           }, 300, null, () => {
@@ -208,7 +252,21 @@
         }
       }
       
+      function animateChildrenSeq(query, animation, duration) {
+        let divs = $(query)
+        
+        let animateRec = (divs, index) => {
+          if (index >= divs.length) { return }
+          $(divs[index]).animate(animation, duration, null, () => {
+            animateRec(divs, index+1)
+          })
+        }
+        
+        animateRec(divs, 0)
+      }
+      
       setTimeout(() => {
+        if (hoverDiv) { return }
         hoverDiv = $('.gallery-container > img')[0]
         setFocusPosition()
       }, 1000)

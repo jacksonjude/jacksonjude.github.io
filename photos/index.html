@@ -7,25 +7,212 @@
     <title>JJCooley - Photos</title>
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <script src="../jquery-3.2.1.min.js"></script>
+    <style>
+      .gallery-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 4vw;
+        padding: 4vw;
+      }
+      
+      .photo-item {
+        width: 100%;
+      }
+      
+      .focus-background {
+        pointer-events: none;
+        
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        
+        z-index: 1;
+        
+        background: rgba(0, 0, 0, 0.5);        
+        backdrop-filter: blur(5px);
+        
+        opacity: 0;
+      }
+      
+      #focus-item {
+        pointer-events: none;
+        
+        border: 3px solid rgba(255, 255, 255, 0.506);
+        position: absolute;
+        
+        z-index: 2;
+      }
+    </style>
   </head>
   <body>
     <div class="background"></div>
-    <img src="/assets/favicon.ico" style="width:50px;height:50px;">
-    <h1>Photos!</h1>
-      <img src="./display/IMG_0500.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_0410.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_0320.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_1758.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_2852.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_1729.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_0087.jpg" style="width:350px;height:262.5px;">
-      <img src="./display/IMG_0118.jpg" style="width:350px;height:262.5px;">
-      <br>
-    <a href="/">Back</a>
-    <br>
-    <br>
+    <img src="assets/favicon.ico" style="width:50px;height:50px;top:8px;position:absolute;">
+    <div class="center-title">
+      <h1 style="margin: 0">Photo Gallery</h1>
+      <!-- <h4 style="margin: 0; text-align: center">iOS<img style="padding-left: 4px; width: 16px; height: 16px" src="assets/projects/swift.png" /> & Web<img style="padding-left: 4px; width: 16px; height: 16px" src="assets/projects/js.png" /> Developer<br>🎓 UCSB CS c/o 2024</h4> -->
+    </div>
+    <div class="gallery-container">
+    </div>
+    <div class="focus-background"></div>
+    <img id="focus-item" style="" />
     <div class="wingdings" id="wingdings">
       <font size="1px"><a style="text-decoration: none" href="http://grompe.org.ru/static/wingdings_gaster.html">🏱☟⚐❄⚐💧</a></font>
     </div>
+    <script>
+      const displayPhotos = [
+        {filename: 'IMG_0500.jpg', location: 'San Francisco, CA', date: '2017', camera: 'Canon PowerShot G10'},
+        {filename: 'IMG_0410.jpg', location: 'San Francisco, CA', date: '2017', camera: 'Canon PowerShot G10'},
+        {filename: 'IMG_0320.jpg', location: 'San Francisco, CA', date: '2017', camera: 'Canon PowerShot G10'},
+        // {filename: 'IMG_4574.jpg', location: 'Santa Barbara, CA', date: '2023', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_3600.jpg', location: 'Madrid, Spain', date: '2022', camera: 'iPhone 11 Pro'},
+        {filename: 'IMG_4599.jpg', location: 'Santa Barbara, CA', date: '2023', camera: 'iPhone 13 Pro'},
+        // {filename: 'IMG_5650.jpg', location: 'Switzerland', date: '2024', camera: 'iPhone 13 Pro'},
+        // {filename: 'IMG_6297.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_6344.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_6372.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 13 Pro'},
+        {filename: 'IMG_6462.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 15 Pro'},
+        {filename: 'IMG_6498.jpg', location: 'San Francisco, CA', date: '2024', camera: 'iPhone 15 Pro'},
+      ].reverse()
+      
+      const zoomPercentage = 0.90
+      const htmlZoomFactor = 1.5
+      
+      for (photoData of displayPhotos) {
+        $('.gallery-container').append(`<img class="photo-item" src="/photos/display/${photoData.filename}" />`)
+      }
+      
+      let hoverDiv = null
+      let newHoverDiv = null
+      setFocusPosition()
+      
+      let isZoomed = false
+      
+      const AnimationState = {
+        selecting: 1,
+        zooming: 2
+      }
+      
+      let animationState = null
+      let animationDepth = 0
+      
+      $('.gallery-container > img').hover((e) => {
+        if (isZoomed || animationState == AnimationState.zooming) {
+          newHoverDiv = e.target
+          console.log(newHoverDiv)
+          return
+        }
+        
+        hoverDiv = e.target
+        
+        setFocusPosition(e.target)
+      }, () => {})
+      
+      $(window).resize(() => {
+        setFocusPosition()
+      })
+      
+      $(window).click(() => {
+        if (!hoverDiv || animationState) { return }
+        
+        isZoomed = !isZoomed
+        setFocusPosition(hoverDiv, !isZoomed)
+        
+        if (isZoomed) {
+          $('html').css('overflow', 'hidden')
+        } else {
+          $('html').css('overflow', '')
+        }
+      })
+      
+      function setFocusPosition(originalDiv = hoverDiv, isZoomingOut = false) {
+        const focusDiv = $('#focus-item')
+        
+        if (!originalDiv) {
+          // focusDiv.css('opacity', 0)
+          return
+        }
+        
+        if (!isZoomed) {
+          $('.focus-background').animate({
+            'opacity': '0'
+          }, 300)
+          
+          focusDiv
+            // .attr('src', $(originalDiv).attr('src'))
+            .css('opacity', 1)
+          //   .css('top', $(originalDiv).position().top-3)
+          //   .css('left', $(originalDiv).position().left-3)
+          //   .css('width', $(originalDiv).width())
+          //   .css('height', $(originalDiv).height())
+          
+          if (isZoomingOut) {
+            animationState = AnimationState.zooming
+          } else {
+            animationState = AnimationState.selecting
+            // focusDiv
+            //   .css('top', $(originalDiv).position().top-3)
+            //   .css('left', $(originalDiv).position().left-3)
+            //   .css('width', $(originalDiv).width())
+            //   .css('height', $(originalDiv).height())
+          }
+          
+          animationDepth += 1
+          
+          focusDiv.animate({
+            'top': $(originalDiv).position().top-3,
+            'left': $(originalDiv).position().left-3,
+            'width': $(originalDiv).width(),
+            'height': $(originalDiv).height()
+          }, 300, null, () => {
+            if (isZoomed) { return }
+            
+            $(originalDiv).css('opacity', 1)
+            $(focusDiv)
+              .attr('src', '')
+            
+            animationDepth -= 1
+            animationState = animationDepth > 0 ? animationState : null
+            
+            if (newHoverDiv && newHoverDiv != hoverDiv) {
+              hoverDiv = newHoverDiv
+              newHoverDiv = null
+              setFocusPosition()
+            }
+          })
+        } else {
+          $(originalDiv).css('opacity', 0)
+          
+          focusDiv
+            .attr('src', $(originalDiv).attr('src'))
+          
+          const newWidthPercentageOfHeight = focusDiv.width()/focusDiv.height()*zoomPercentage
+          
+          animationDepth += 2
+          
+          focusDiv.animate({
+            'top': ($(document).scrollTop()+(1-zoomPercentage)/2*$(window).height())/htmlZoomFactor,
+            'left': ($(window).width()-$(window).height()*newWidthPercentageOfHeight)/2/htmlZoomFactor,
+            'width': `${newWidthPercentageOfHeight*100}vh`,
+            'height': `${zoomPercentage*100}vh`
+          }, 300, null, () => {
+            animationDepth -= 1
+          })
+          
+          $('.focus-background').animate({
+            'opacity': '1'
+          }, 300, null, () => {
+            animationDepth -= 1
+          })
+        }
+      }
+      
+      setTimeout(() => {
+        hoverDiv = $('.gallery-container > img')[0]
+        setFocusPosition()
+      }, 1000)
+    </script>
   </body>
 </html>

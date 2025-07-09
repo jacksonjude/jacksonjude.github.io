@@ -403,3 +403,34 @@ tr:nth-child(even) {
     background-position: 20px 0, 20px 0, 20px 0;
   }
 }
+
+@media (max-width: 1200px) {
+  .homepageboxes {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 50px;
+  }
+  
+  #detailcontainer {
+    display: none;
+  }
+  
+  html {
+    overflow: auto !important;
+    background: #000;
+  }
+  
+  .background {
+    left: 0% !important;
+    top: 0% !important;
+    position: absolute;
+    
+    min-width: 100%;
+    min-height: 300%;
+  }
+  
+  .dog, .vdog {
+    display: none;
+  }
+}
